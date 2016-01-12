@@ -5,9 +5,9 @@ using System.Collections;
 
 public class PlayerControl : MonoBehaviour {
 
-    public float speed;
-    public Text countText;
-    public Text winText;
+    public float power;
+    public Text countText, winText;
+    public GameObject cam;
 
     private Rigidbody rb;
     private int count;
@@ -15,7 +15,6 @@ public class PlayerControl : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-
         rb = GetComponent<Rigidbody>();
 
         count = 0;
@@ -27,19 +26,22 @@ public class PlayerControl : MonoBehaviour {
     // FixedUpdate is called once per timestep
     void FixedUpdate()
     {
+        //Get user input
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
 
-        float moveH = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
-        float moveV = Input.GetAxis("Vertical") * speed * Time.deltaTime;
+        //Desired push (normalized to cancel out "extra push")
+        Vector3 push = new Vector3(x, 0.0f, z);
+        push = push.normalized;
+        push = push * power * Time.deltaTime;
 
-        Vector3 move = new Vector3(moveH, 0.0f, moveV);
-        move = move.normalized;
-        move *= speed;
+        push = Quaternion.Euler( 0.0f, cam.transform.rotation.eulerAngles.y, 0.0f ) * push;
 
-        rb.AddForce(move);
+        rb.AddForce(push);
 
+        //Check for ball death/lost
         if (rb.position.y <= -5.0f)
         {
-
             winText.text = ":(";
             StartCoroutine(resetDelay());
         }
@@ -47,10 +49,8 @@ public class PlayerControl : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-
-        if (other.gameObject.CompareTag("PickUp"))
+        if(other.gameObject.CompareTag("PickUp"))
         {
-
             other.gameObject.SetActive(false);
             count++;
             setText();
@@ -59,12 +59,10 @@ public class PlayerControl : MonoBehaviour {
 
     void setText()
     {
-
         countText.text = "Count: " + count.ToString();
 
         if (count >= 12)
         {
-
             winText.text = "You Win!";
 
             StartCoroutine(EndDelay());
