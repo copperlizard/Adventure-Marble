@@ -75,9 +75,9 @@ public class CamControl : MonoBehaviour {
         transform.rotation = rotation;
         
         //Check for intersection along view ray and move camera if necessary
-        if (Physics.Raycast(transform.position, player.transform.position, out interAt))
+        if (Physics.Raycast(player.transform.position, transform.position - player.transform.position, out interAt))
         {
-            dist = Mathf.Clamp(interAt.distance, minDist, maxDist );
+            dist = Mathf.Clamp(interAt.distance - 0.1f, minDist, maxDist );
             transform.position = rotation * (new Vector3(0.0f, 0.0f, -dist)) + player.transform.position;
         }
 
