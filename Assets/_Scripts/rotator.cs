@@ -16,6 +16,6 @@ public class rotator : MonoBehaviour {
     // Fixed Update called once per physics update
     void FixedUpdate()
     {
-        transform.Rotate(0.15f, 0.3f, 0.45f);
+        transform.Rotate( new Vector3(15.0f, 30.0f, 45.0f) * Time.deltaTime );
     }
 }

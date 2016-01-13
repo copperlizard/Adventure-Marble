@@ -48,7 +48,7 @@ public class PlayerControl : MonoBehaviour {
         //Jump
         if( a > 0 && grounded == true )
         {
-            rb.AddForce(Vector3.up * hopPower);
+            rb.AddForce(Vector3.up * hopPower / Time.deltaTime);
             grounded = false;
         }
 
@@ -79,7 +79,17 @@ public class PlayerControl : MonoBehaviour {
                     grounded = true;
                     break;
                 }
-            }
+            }          
+        }
+    }
+
+    void OnCollisionExit(Collision other)
+    {
+        //0 == ground layer
+        if(other.gameObject.layer == 0)
+        {
+            //Left the ground
+            grounded = false;
         }
     }
 
