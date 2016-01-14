@@ -18,4 +18,10 @@ public class MenuClick : MonoBehaviour {
     public void load( int ind ) {
         SceneManager.LoadScene( ind );
     }
+
+    // End application
+    public void quitGame()
+    {
+        Application.Quit();
+    }
 }

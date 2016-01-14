@@ -8,14 +8,22 @@ public class PlayerControl : MonoBehaviour {
     public float power, hopPower;
     public Text countText, winText;
     public GameObject cam;
+    public GameObject PauseScreen;
+    public AudioSource pickupSound;
 
     private Rigidbody rb;
+    private Vector3 push, groundAt;
+    private float x, z;
     private int count;
-    private bool grounded;
+    private bool a, grounded, pause;
 
     // Use this for initialization
     void Start()
     {
+        //Hide cursor
+        Cursor.visible = false;
+
+        //Get player's rigid body
         rb = GetComponent<Rigidbody>();
 
         count = 0;
@@ -24,84 +32,41 @@ public class PlayerControl : MonoBehaviour {
         setText();
 
         grounded = false;
+        pause = false;
+        PauseScreen.SetActive(false);
     }
 
-    // FixedUpdate is called once per timestep
-    void FixedUpdate()
+    void getInput()
     {
         //Get user input
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-        float a = Input.GetAxisRaw("Jump");
-
-        //Desired push (normalized to cancel out "extra push")
-        Vector3 push = new Vector3(x, 0.0f, z);
-        push = push.normalized;
-        push = push * power * Time.deltaTime;
-
-        //Adjust push to account for camera rotation
-        push = Quaternion.Euler( 0.0f, cam.transform.rotation.eulerAngles.y, 0.0f ) * push;
-
-        //Apply push
-        rb.AddForce(push);
-
-        //Jump
-        if( a > 0 && grounded == true )
+        x = Input.GetAxis("Horizontal");
+        z = Input.GetAxis("Vertical");
+        a = Input.GetButtonDown("Jump");
+        if(Input.GetButtonDown("Pause"))
         {
-            rb.AddForce(Vector3.up * hopPower / Time.deltaTime);
-            grounded = false;
-        }
-
-        //Check for ball death/lost
-        if (rb.position.y <= -5.0f)
-        {
-            winText.text = ":(";
-            StartCoroutine(resetDelay());
-        }
-    }
-
-    //Called once per frame for each touching body
-    void OnCollisionStay(Collision other)
-    {
-        //0 == ground layer
-        if(other.gameObject.layer == 0)
-        {
-            //Check ground not too steep (or a wall)
-            foreach(ContactPoint contact in other.contacts )
+            if( !pause )
             {
-                Vector3 point = contact.point;
-                Vector3 line = point - transform.position;
-                line = line.normalized;
-
-                //Grounded
-                if( Vector3.Dot( Vector3.up, line) < 0.0 ) //decrease later...
-                {
-                    grounded = true;
-                    break;
-                }
-            }          
+                pause = true;
+            }
+            else
+            {
+                pause = false;
+            }
         }
     }
 
-    void OnCollisionExit(Collision other)
+    void pauseGame()
     {
-        //0 == ground layer
-        if(other.gameObject.layer == 0)
-        {
-            //Left the ground
-            grounded = false;
-        }
+        Time.timeScale = 0.0f;
+        PauseScreen.SetActive(true);
+        Cursor.visible = true;       
     }
 
-    //Called when the collider other enters a trigger
-    void OnTriggerEnter(Collider other)
+    void resumeGame()
     {
-        if(other.gameObject.CompareTag("PickUp"))
-        {
-            other.gameObject.SetActive(false);
-            count++;
-            setText();
-        }
+        Time.timeScale = 1.0f;
+        PauseScreen.SetActive(false);
+        Cursor.visible = false;
     }
 
     void setText()
@@ -118,15 +83,109 @@ public class PlayerControl : MonoBehaviour {
 
     IEnumerator EndDelay()
     {
-
         yield return new WaitForSeconds(5);
+        Cursor.visible = true;
         SceneManager.LoadScene(0);
     }
 
     IEnumerator resetDelay()
     {
-
         yield return new WaitForSeconds(3);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        getInput();
+
+        //Pause/UnPause game if necessary
+        if(pause && Time.timeScale != 0.0f)
+        {
+            pauseGame();
+        }
+        else if(!pause && Time.timeScale == 0.0f)
+        {
+            resumeGame();
+        }
+    }
+
+    // FixedUpdate is called once per timestep
+    void FixedUpdate()
+    {
+        //Desired push (normalized to cancel out "extra push")
+        push = new Vector3(x, 0.0f, z);
+        push = push.normalized;
+        push = push * power * Time.deltaTime;
+
+        //Adjust push to account for camera rotation
+        push = Quaternion.Euler( 0.0f, cam.transform.rotation.eulerAngles.y, 0.0f ) * push;
+
+        //Apply push
+        rb.AddForce(push);
+
+        //Jump
+        if( a && grounded == true )
+        {
+            rb.AddForce(-groundAt * hopPower * Time.deltaTime);
+            //rb.AddForce(Vector3.up * hopPower * Time.deltaTime);
+            //grounded = false;
+            //Debug.Log("Jumping!" + groundAt.ToString()); //REMOVE LATER!!!
+        }
+
+        //Check for ball death/lost
+        if (rb.position.y <= -5.0f)
+        {
+            winText.text = ":(";
+            StartCoroutine(resetDelay());
+        }
+    }
+
+    //Called once per frame for each touching body
+    void OnCollisionStay(Collision other)
+    {
+        //First rest on ground, 0 == ground layer
+        if(other.gameObject.layer == 0 && grounded == false)
+        {
+            //Check ground not too steep
+            foreach(ContactPoint contact in other.contacts )
+            {
+                Vector3 point = contact.point;
+                Vector3 line = point - transform.position;
+                line = line.normalized;
+
+                //Grounded
+                if( Vector3.Dot( Vector3.up, line) < 0.0 ) //decrease 0.0(90deg) later...
+                {
+                    grounded = true;
+                    groundAt = line;
+                    //Debug.Log("Grounded!"); //REMOVE LATER!!!
+                    break;
+                }
+            }          
+        }
+    }
+
+    void OnCollisionExit(Collision other)
+    {
+        //0 == ground layer
+        if(other.gameObject.layer == 0)
+        {
+            //Left the ground
+            grounded = false;
+            //Debug.Log("Falling!"); //REMOVE LATER!!!
+        }
+    }
+
+    //Called when the collider other enters a trigger
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("PickUp"))
+        {
+            other.gameObject.SetActive(false);
+            pickupSound.PlayOneShot(pickupSound.clip);
+            count++;
+            setText();
+        }
     }
 }
