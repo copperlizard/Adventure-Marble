@@ -144,8 +144,8 @@ public class PlayerControl : MonoBehaviour {
     //Called once per frame for each touching body
     void OnCollisionStay(Collision other)
     {
-        //First rest on ground, 0 == ground layer
-        if(other.gameObject.layer == 0 && grounded == false)
+        //0 == ground layer
+        if(other.gameObject.layer == 0)
         {
             //Check ground not too steep
             foreach(ContactPoint contact in other.contacts )

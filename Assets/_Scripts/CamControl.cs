@@ -4,21 +4,15 @@ using System.Collections;
 public class CamControl : MonoBehaviour {
 
     public GameObject player;
-
     public float fDist, minDist, maxDist, xspeed, yspeed, ymin, ymax;
 
     private Vector3 viewLine;
-
-    private float h, v;
-    private float dist;
-    
-    private Transform temp;
-
     private RaycastHit interAt;
+    private float h, v, dist;  
 
     // Use this for initialization
-    void Start () {
-
+    void Start ()
+    {
         viewLine = transform.position - player.transform.position;
         viewLine = viewLine.normalized;
 
@@ -41,8 +35,8 @@ public class CamControl : MonoBehaviour {
         return Mathf.Clamp(ang, min, max);
     }
 
-    void getInput() {
-
+    void getInput()
+    {
         h -= Input.GetAxis("rHorizontal") * xspeed * 0.02f;
         v += Input.GetAxis("rVertical") * yspeed * 0.02f;
 
@@ -50,24 +44,17 @@ public class CamControl : MonoBehaviour {
     }
 
 	// Update is called once per frame
-	void Update() {
-
+	void Update()
+    {
         getInput();
 	}
-
-    // Update called once per physics update
-    void FixedUpdate()
+       
+    void LateUpdate()
     {
-        
-    }
-
-
-    // LateUpdate is called once per frame after Update
-    void LateUpdate() {
-
         //Build rotation using input
         Quaternion rotation = Quaternion.Euler(v, h, 0.0f);
 
+        //Set desired dist
         dist = fDist;
 
         //Place and rotate camera transform based on player transform and user input
@@ -77,11 +64,10 @@ public class CamControl : MonoBehaviour {
         //Check for intersection along view ray and move camera if necessary
         if (Physics.Raycast(player.transform.position, transform.position - player.transform.position, out interAt))
         {
-            dist = Mathf.Clamp(interAt.distance - 0.1f, minDist, maxDist );
+            dist = Mathf.Clamp(interAt.distance - 0.1f, minDist, maxDist);
             transform.position = rotation * (new Vector3(0.0f, 0.0f, -dist)) + player.transform.position;
-        }
-
-        
+        }        
     }
 }
 
+//transform.position = Vector3.Lerp(transform.position, rotation * (new Vector3(0.0f, 0.0f, -dist)) + player.transform.position, damp * Time.fixedDeltaTime);
