@@ -4,7 +4,7 @@ using System.Collections;
 public class CamControl : MonoBehaviour {
 
     public GameObject player;
-    public float fDist, minDist, maxDist, xspeed, yspeed, ymin, ymax;
+    public float fDist, minDist, maxDist, xspeed, yspeed, ymin, ymax, hstart, vstart;
 
     private Vector3 viewLine;
     private RaycastHit interAt;
@@ -18,8 +18,8 @@ public class CamControl : MonoBehaviour {
 
         transform.position = player.transform.position + viewLine * fDist;
 
-        h = 0.0f;
-        v = 0.0f;
+        h = hstart;
+        v = vstart;
     }
 
     float clampAngle(float ang, float min, float max)
@@ -64,8 +64,12 @@ public class CamControl : MonoBehaviour {
         //Check for intersection along view ray and move camera if necessary
         if (Physics.Raycast(player.transform.position, transform.position - player.transform.position, out interAt))
         {
-            dist = Mathf.Clamp(interAt.distance - 0.1f, minDist, maxDist);
-            transform.position = rotation * (new Vector3(0.0f, 0.0f, -dist)) + player.transform.position;
+            //Ignore intersections with game pieces
+            if( interAt.collider.gameObject.layer != 9 )
+            {
+                dist = Mathf.Clamp(interAt.distance - 0.1f, minDist, maxDist);
+                transform.position = rotation * (new Vector3(0.0f, 0.0f, -dist)) + player.transform.position;
+            }            
         }        
     }
 }
