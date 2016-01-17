@@ -137,7 +137,7 @@ public class PlayerControl : MonoBehaviour {
         //Desired push (normalized to cancel out "extra push")
         push = new Vector3(x, 0.0f, z);
         push = push.normalized;
-        push = push * power * Time.deltaTime;
+        push = push * power;
 
         //Adjust push to account for camera rotation
         push = Quaternion.Euler( 0.0f, cam.transform.rotation.eulerAngles.y, 0.0f ) * push;
@@ -148,8 +148,8 @@ public class PlayerControl : MonoBehaviour {
         //Jump
         if( a && grounded == true )
         {
-            rb.AddForce(-groundAt * hopPower * Time.deltaTime);
-            //rb.AddForce(Vector3.up * hopPower * Time.deltaTime);
+            rb.AddForce(-groundAt * hopPower);
+            //rb.AddForce(Vector3.up * hopPower);
             //grounded = false;
             //Debug.Log("Jumping!" + groundAt.ToString()); //REMOVE LATER!!!
         }
