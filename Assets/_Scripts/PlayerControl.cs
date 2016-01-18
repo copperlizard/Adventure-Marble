@@ -5,19 +5,21 @@ using System.Collections;
 
 public class PlayerControl : MonoBehaviour {
 
-    public float power, hopPower, pfactor, vfactor;
+    public float power, hopPower, rPfactor, rVfactor;
     public Text countText, winText;
     public GameObject cam;
     public GameObject PauseScreen;
     public AudioSource pickupSound;
     public AudioSource rolling1;
     public AudioSource collision1;
+    public AudioSource jump1;
 
     private Rigidbody rb;
     private Vector3 push, groundAt;
+    private string powerUp;
     private float x, z, volume, pitch;
     private int count;
-    private bool a, grounded, pause;
+    private bool a, lb, grounded, pause;
 
     // Use this for initialization
     void Start()
@@ -36,6 +38,8 @@ public class PlayerControl : MonoBehaviour {
         grounded = false;
         pause = false;
         PauseScreen.SetActive(false);
+
+        powerUp = "none";
     }
 
     void getInput()
@@ -44,6 +48,7 @@ public class PlayerControl : MonoBehaviour {
         x = Input.GetAxis("Horizontal");
         z = Input.GetAxis("Vertical");
         a = Input.GetButtonDown("Jump");
+        lb = Input.GetButtonDown("Power");
         if(Input.GetButtonDown("Pause"))
         {
             if( !pause )
@@ -63,7 +68,8 @@ public class PlayerControl : MonoBehaviour {
         PauseScreen.SetActive(true);
         Cursor.visible = true;
         rolling1.Pause();
-        collision1.Pause();       
+        collision1.Pause();
+        jump1.Pause();      
     }
 
     void resumeGame()
@@ -71,6 +77,11 @@ public class PlayerControl : MonoBehaviour {
         Time.timeScale = 1.0f;
         PauseScreen.SetActive(false);
         Cursor.visible = false;
+    }
+
+    void setPower(string pow)
+    {
+        powerUp = pow;
     }
 
     void setText()
@@ -107,11 +118,10 @@ public class PlayerControl : MonoBehaviour {
             yield return null;
         }
 
-        pitch = Mathf.Lerp(pitch, Random.value * pfactor, 0.01f);
-        volume = rb.velocity.magnitude * vfactor;
-        collision1.pitch = pitch;
-        collision1.volume = volume;
-
+        pitch = Mathf.Lerp(pitch, Random.value * rPfactor, 0.01f);
+        volume = rb.velocity.magnitude * rVfactor;
+        collision1.pitch = Mathf.Clamp(pitch, 0.2f, 1.5f);
+        collision1.volume = Mathf.Clamp(volume, 0.2f, 1.5f);
         collision1.PlayOneShot(collision1.clip);
     }
 
@@ -149,9 +159,29 @@ public class PlayerControl : MonoBehaviour {
         if( a && grounded == true )
         {
             rb.AddForce(-groundAt * hopPower);
-            //rb.AddForce(Vector3.up * hopPower);
-            //grounded = false;
-            //Debug.Log("Jumping!" + groundAt.ToString()); //REMOVE LATER!!!
+            jump1.PlayOneShot(jump1.clip);
+        }
+
+        //Deployables
+        if( lb )
+        {
+            if(powerUp == "none")
+            {
+                //Maybe play funny sound
+            }
+            else if(powerUp == "SuperJump")
+            {
+                rb.AddForce(-groundAt * 2000.0f);
+                //Play super jump sound
+            }
+            else if(powerUp == "Gravity")
+            {
+                //Start coroutine to fuss with gravity
+            }
+            else if(powerUp == "Magnet")
+            {
+                //Start coroutine to attract gamepieces
+            }
         }
 
         //Rolling noise
@@ -162,14 +192,14 @@ public class PlayerControl : MonoBehaviour {
                 rolling1.Play();
             }
 
-            pitch = Mathf.Lerp( pitch, Random.value * pfactor, 0.01f);
-            volume = rb.velocity.magnitude * vfactor;
+            pitch = Mathf.Lerp(pitch, Random.value / 2.0f, rPfactor);
+            volume = rb.velocity.magnitude * rVfactor;
             rolling1.pitch = pitch;
             rolling1.volume = volume;
         }
         else
         {
-            rolling1.Pause();
+            rolling1.Pause();           
         }
 
         //Check for ball death/lost
@@ -182,7 +212,10 @@ public class PlayerControl : MonoBehaviour {
 
     void OnCollsionEnter(Collision other)
     {
-       //I think this only works on colliders with rigid bodies (not the level...)
+       if( other.gameObject.layer == 0 )
+        {
+            grounded = true;
+        }
     }
 
     //Called once per frame for each touching body
@@ -232,6 +265,10 @@ public class PlayerControl : MonoBehaviour {
             pickupSound.PlayOneShot(pickupSound.clip);
             count++;
             setText();
+        }
+        else if(other.gameObject.CompareTag("PowerUp"))
+        {
+            other.gameObject.BroadcastMessage("collected");
         }
     }
 }

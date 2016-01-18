@@ -4,8 +4,9 @@ using System.Collections;
 public class CamControl : MonoBehaviour {
 
     public GameObject player;
-    public float fDist, minDist, maxDist, xspeed, yspeed, ymin, ymax, hstart, vstart;
+    public float fDist, minDist, maxDist, xspeed, yspeed, ymin, ymax, hstart, vstart, damp;
 
+    private Quaternion rotation;
     private Vector3 viewLine;
     private RaycastHit interAt;
     private float h, v, dist;  
@@ -20,6 +21,8 @@ public class CamControl : MonoBehaviour {
 
         h = hstart;
         v = vstart;
+
+        rotation = Quaternion.Euler(v, h, 0.0f);
     }
 
     float clampAngle(float ang, float min, float max)
@@ -52,7 +55,7 @@ public class CamControl : MonoBehaviour {
     void LateUpdate()
     {
         //Build rotation using input
-        Quaternion rotation = Quaternion.Euler(v, h, 0.0f);
+        rotation = Quaternion.Slerp(rotation, Quaternion.Euler(v, h, 0.0f), damp * Time.deltaTime);
 
         //Set desired dist
         dist = fDist;
