@@ -5,7 +5,7 @@ using System.Collections;
 
 public class PlayerControl : MonoBehaviour {
 
-    public float power, hopPower, rPfactor, rVfactor;
+    public float power, hopPower, rPfactor, rVfactor, superJumpPower, gravMarbleDur, gravMarbleGrav;
     public Text countText, winText;
     public GameObject cam;
     public GameObject PauseScreen;
@@ -13,6 +13,10 @@ public class PlayerControl : MonoBehaviour {
     public AudioSource rolling1;
     public AudioSource collision1;
     public AudioSource jump1;
+    public AudioSource superJumpcol1;
+    public AudioSource superJump1;
+    public AudioSource gravMarbleCol1;
+    public AudioSource gravMarble1;
 
     private Rigidbody rb;
     private Vector3 push, groundAt;
@@ -29,6 +33,7 @@ public class PlayerControl : MonoBehaviour {
 
         //Get player's rigid body
         rb = GetComponent<Rigidbody>();
+        rb.maxAngularVelocity = 40;
 
         count = 0;
 
@@ -79,9 +84,20 @@ public class PlayerControl : MonoBehaviour {
         Cursor.visible = false;
     }
 
-    void setPower(string pow)
+    void setPower(object[] parameters)
     {
-        powerUp = pow;
+        powerUp = parameters[0].ToString();
+
+        StartCoroutine(respawnTimer((GameObject)parameters[2], (float)parameters[1]));
+
+        if(powerUp == "SuperJump")
+        {
+            superJumpcol1.PlayOneShot(superJumpcol1.clip);
+        }
+        else if(powerUp == "GravityMarble")
+        {
+            gravMarbleCol1.PlayOneShot(gravMarbleCol1.clip);
+        }
     }
 
     void setText()
@@ -107,6 +123,27 @@ public class PlayerControl : MonoBehaviour {
     {
         yield return new WaitForSeconds(3);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    IEnumerator respawnTimer(GameObject col, float t)
+    {
+        col.SetActive(false);
+        yield return new WaitForSeconds(t);
+        col.SetActive(true);
+    }
+
+    IEnumerator gravityMarble()
+    {
+        rb.useGravity = false;
+        gravMarble1.Play();
+        float startTime = Time.time;
+        while( Time.time < startTime + gravMarbleDur)
+        {
+            rb.AddForce(groundAt * gravMarbleGrav);
+            yield return null;
+        }
+        rb.useGravity = true;
+        gravMarble1.Stop();
     }
 
     IEnumerator JumpSoundDelay()
@@ -147,16 +184,25 @@ public class PlayerControl : MonoBehaviour {
         //Desired push (normalized to cancel out "extra push")
         push = new Vector3(x, 0.0f, z);
         push = push.normalized;
-        push = push * power;
+        push = push * power * Mathf.SmoothStep( 0.0f, 1.0f, push.magnitude);
+        //push = push * Mathf.SmoothStep(0.0f, power, tilt);
 
+        //Magic Marble
         //Adjust push to account for camera rotation
-        push = Quaternion.Euler( 0.0f, cam.transform.rotation.eulerAngles.y, 0.0f ) * push;
+        //push = Quaternion.Euler( 0.0f, cam.transform.rotation.eulerAngles.y, 0.0f ) * push;
 
         //Apply push
-        rb.AddForce(push);
+        //rb.AddForce(push);
+
+        //Sphere-o Marble
+        //Adjust push to account for camera rotation
+        push = Quaternion.Euler( 0.0f, cam.transform.rotation.eulerAngles.y + 90.0f, 0.0f ) * push;
+
+        //Apply torque
+        rb.AddTorque(push);
 
         //Jump
-        if( a && grounded == true )
+        if ( a && grounded == true )
         {
             rb.AddForce(-groundAt * hopPower);
             jump1.PlayOneShot(jump1.clip);
@@ -171,17 +217,15 @@ public class PlayerControl : MonoBehaviour {
             }
             else if(powerUp == "SuperJump")
             {
-                rb.AddForce(-groundAt * 2000.0f);
-                //Play super jump sound
+                rb.AddForce(-groundAt * superJumpPower);
+                superJump1.PlayOneShot(superJump1.clip);
+                powerUp = "none";
             }
-            else if(powerUp == "Gravity")
+            else if(powerUp == "GravityMarble")
             {
-                //Start coroutine to fuss with gravity
-            }
-            else if(powerUp == "Magnet")
-            {
-                //Start coroutine to attract gamepieces
-            }
+                StartCoroutine(gravityMarble());
+                powerUp = "none";
+            }            
         }
 
         //Rolling noise

@@ -36,37 +36,49 @@ public class MenuClick : MonoBehaviour {
         {
             if(v != 0.0f)
             {
-                //Debug.Log("Joypadding!");
+                Debug.Log("Joypadding!");
                 joypadding = true;
             }            
         }
         else
         {
-            if(v > 0.0f && ind > 0 && !locked)
-            {
-                btn = btn.FindSelectableOnUp();
-                ind -= 1;
-                StartCoroutine(switchDelay());
-            }
-            else if(v < 0.0f && ind < btns - 1 && !locked)
-            {
-                btn = btn.FindSelectableOnDown();
-                ind += 1;
-                StartCoroutine(switchDelay());
-            }
             btn.Select();
+
+            if(!locked)
+            {
+                Debug.Log("ind = " + ind.ToString());
+                if (v > 0.0f && ind > 0)
+                {
+                    Debug.Log("trying to go up");
+                    btn = btn.FindSelectableOnUp();
+                    ind -= 1;
+                    StartCoroutine(switchDelay());
+                }
+                else if (v < 0.0f && ind < btns - 1)
+                {
+                    Debug.Log("trying to go down");
+                    btn = btn.FindSelectableOnDown();
+                    ind += 1;
+                    StartCoroutine(switchDelay());
+                }
+            }
+
+            
+            
+            
+            
 
             if(a > 0.0f)
             {
-                btn.Invoke("OnClick()", 0.0f);
+                btn.Invoke("OnClick()", 0.1f);
             }
         }        
 	}
 
     // Load Scene
-    public void load( int ind )
+    public void load( int num )
     {
-        SceneManager.LoadScene( ind );
+        SceneManager.LoadScene( num );
     }
 
     // End application
