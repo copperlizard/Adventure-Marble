@@ -63,11 +63,6 @@ public class MenuClick : MonoBehaviour {
                 }
             }
 
-            
-            
-            
-            
-
             if(a > 0.0f)
             {
                 btn.Invoke("OnClick()", 0.1f);

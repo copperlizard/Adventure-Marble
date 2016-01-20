@@ -9,11 +9,14 @@ public class CamControl : MonoBehaviour {
     private Quaternion rotation;
     private Vector3 viewLine;
     private RaycastHit interAt;
-    private float h, v, dist;  
+    private float h, v, dist;
+    private bool paused;
 
     // Use this for initialization
     void Start ()
     {
+        AudioListener.pause = false;
+
         viewLine = transform.position - player.transform.position;
         viewLine = viewLine.normalized;
 
@@ -23,6 +26,13 @@ public class CamControl : MonoBehaviour {
         v = vstart;
 
         rotation = Quaternion.Euler(v, h, 0.0f);
+
+        paused = false;
+    }
+
+    public void pause( bool state )
+    {
+        paused = state;
     }
 
     float clampAngle(float ang, float min, float max)
@@ -40,10 +50,13 @@ public class CamControl : MonoBehaviour {
 
     void getInput()
     {
-        h -= Input.GetAxis("rHorizontal") * xspeed * 0.02f;
-        v += Input.GetAxis("rVertical") * yspeed * 0.02f;
+        if(!paused)
+        {
+            h -= Input.GetAxis("rHorizontal") * xspeed * 0.02f;
+            v += Input.GetAxis("rVertical") * yspeed * 0.02f;
 
-        v = clampAngle(v, ymin, ymax);
+            v = clampAngle(v, ymin, ymax);
+        }        
     }
 
 	// Update is called once per frame
