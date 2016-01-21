@@ -4,21 +4,23 @@ using System.Collections;
 
 public class LoadLevelButton : MonoBehaviour {
 
-    public int levelNum;
+    public int levelNum;   
 
 	// Use this for initialization
-	void Start () {
-	
+	void Start ()
+    {
+               
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 	
 	}
 
     public void loadlevel()
     {
         Cursor.visible = true;
-        SceneManager.LoadScene(levelNum);
+        SceneManager.LoadScene(levelNum);                
     }
 }
