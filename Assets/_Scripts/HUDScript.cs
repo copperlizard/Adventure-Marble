@@ -50,7 +50,7 @@ public class HUDScript : MonoBehaviour
     {
         HUD.speedometer.text = rb.GetRelativePointVelocity(Vector3.zero).magnitude.ToString();
         HUD.powerText.text = "PU:" + player.GetComponent<PlayerControl>().powerUp;
-        HUD.PUcounter.text = "PickUps:" + player.GetComponent<PlayerControl>().PUcount.ToString();
+        HUD.PUcounter.text = "PickUps:" + player.GetComponent<PlayerControl>().PUcount.ToString() + "/" + PUtot.ToString();
         HUD.FPcounter.text = "Pushes:" +player.GetComponent<PlayerControl>().phys.fPushes.ToString();
 
         if(player.GetComponent<PlayerControl>().PUcount >= PUtot)

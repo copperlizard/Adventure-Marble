@@ -1,0 +1,135 @@
+fileFormatVersion: 2
+guid: e13a980871780ca4cb05123c3395d581
+timeCreated: 1453402565
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: PlatformA
+    100004: PlatformB
+    100006: PlatformC
+    100008: PlatformD
+    100010: StepA
+    100012: StepA_001
+    100014: StepA_002
+    100016: Cube
+    100018: RampStep
+    100020: StepB
+    100022: StepC
+    100024: HalfPipe
+    400000: //RootNode
+    400002: PlatformA
+    400004: PlatformB
+    400006: PlatformC
+    400008: PlatformD
+    400010: StepA
+    400012: StepA_001
+    400014: StepA_002
+    400016: Cube
+    400018: RampStep
+    400020: StepB
+    400022: StepC
+    400024: HalfPipe
+    2300000: PlatformA
+    2300002: PlatformB
+    2300004: PlatformC
+    2300006: PlatformD
+    2300008: StepA
+    2300010: StepA_001
+    2300012: StepA_002
+    2300014: Cube
+    2300016: RampStep
+    2300018: StepB
+    2300020: StepC
+    2300022: HalfPipe
+    3300000: PlatformA
+    3300002: PlatformB
+    3300004: PlatformC
+    3300006: PlatformD
+    3300008: StepA
+    3300010: StepA_001
+    3300012: StepA_002
+    3300014: Cube
+    3300016: RampStep
+    3300018: StepB
+    3300020: StepC
+    3300022: HalfPipe
+    4300000: StepA_002
+    4300002: StepA_001
+    4300004: StepA
+    4300006: PlatformD
+    4300008: PlatformC
+    4300010: PlatformB
+    4300012: PlatformA
+    4300014: Cube
+    4300016: RampStep
+    4300018: StepC
+    4300020: StepB
+    4300022: HalfPipe
+    7400000: Default Take
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
