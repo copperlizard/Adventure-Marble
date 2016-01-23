@@ -9,32 +9,36 @@ public class PlayerControl : MonoBehaviour
 
     [HideInInspector]
     public string powerUp;
+    [HideInInspector]
     public int PUcount;
 
     [System.Serializable]
     public class MarblePhys
     {
-        public float power, hopPower, airPower, rPfactor, rVfactor, superJumpPower, gravMarbleDur, gravMarbleGrav, fPush, fPushCDTime, fPushRCTime;
+        public float power, hopPower, airPower, rPfactor, rPslide, rVfactor, superJumpPower, gravMarbleDur, gravMarbleGrav, fPush, fPushCDTime, fPushRCTime;
         public int fPushes;
     }
     public MarblePhys phys = new MarblePhys();
 
+    public AudioSource moveSounds;
+    public AudioSource SFXSounds;
+
     [System.Serializable]
-    public class audioSources
+    public class audioClips
     {
-        public AudioSource pickupSound;
-        public AudioSource rolling1;
-        public AudioSource collision1;
-        public AudioSource jump1;
-        public AudioSource superJumpcol1;
-        public AudioSource superJump1;
-        public AudioSource gravMarbleCol1;
-        public AudioSource gravMarble1;
-        public AudioSource fPush1;
-        public AudioSource noPow1;
-        public AudioSource noPush1;
+        public AudioClip pickupSound;
+        public AudioClip rolling1;
+        public AudioClip collision1;
+        public AudioClip jump1;
+        public AudioClip superJumpcol1;
+        public AudioClip superJump1;
+        public AudioClip gravMarbleCol1;
+        public AudioClip gravMarble1;
+        public AudioClip fPush1;
+        public AudioClip noPow1;
+        public AudioClip noPush1;
     }
-    public audioSources sounds = new audioSources();
+    public audioClips sounds = new audioClips();
 
     private Rigidbody rb;
     private Vector3 push, groundAt;    
@@ -78,11 +82,11 @@ public class PlayerControl : MonoBehaviour
 
         if(powerUp == "SuperJump")
         {
-            sounds.superJumpcol1.PlayOneShot(sounds.superJumpcol1.clip);
+            SFXSounds.PlayOneShot(sounds.superJumpcol1);            
         }
         else if(powerUp == "GravityMarble")
         {
-            sounds.gravMarbleCol1.PlayOneShot(sounds.gravMarbleCol1.clip);
+            SFXSounds.PlayOneShot(sounds.gravMarbleCol1);
         }
     }
 
@@ -111,30 +115,17 @@ public class PlayerControl : MonoBehaviour
     {
         rb.useGravity = false;
         gravMarbleActive = true;
-        sounds.gravMarble1.Play();
+        moveSounds.clip = sounds.gravMarble1;
+        moveSounds.Play();
         float startTime = Time.time;
-        while( Time.time < startTime + phys.gravMarbleDur)
+        while(Time.time < startTime + phys.gravMarbleDur)
         {
             rb.AddForce(groundAt * phys.gravMarbleGrav);            
             yield return null;
         }
         rb.useGravity = true;
         gravMarbleActive = false;
-        sounds.gravMarble1.Stop();
-    }
-
-    IEnumerator JumpSoundDelay()
-    {        
-        while( !grounded )
-        {            
-            yield return null;
-        }
-
-        pitch = Mathf.Lerp(pitch, Random.value * phys.rPfactor, 0.01f);
-        volume = rb.velocity.magnitude * phys.rVfactor;
-        sounds.collision1.pitch = Mathf.Clamp(pitch, 0.2f, 1.5f);
-        sounds.collision1.volume = Mathf.Clamp(volume, 0.2f, 1.5f);
-        sounds.collision1.PlayOneShot(sounds.collision1.clip);
+        moveSounds.clip = sounds.rolling1;
     }
 
     // Update is called once per frame
@@ -168,9 +159,13 @@ public class PlayerControl : MonoBehaviour
 
         //Jump
         if (a && grounded == true)
-        {
+        {            
             rb.AddForce(-groundAt * phys.hopPower);
-            sounds.jump1.PlayOneShot(sounds.jump1.clip);
+            if(SFXSounds.clip != sounds.jump1 )
+            {  
+                SFXSounds.clip = sounds.jump1;
+            }            
+            SFXSounds.PlayOneShot(sounds.jump1);            
         }
 
         //Deployables
@@ -178,15 +173,16 @@ public class PlayerControl : MonoBehaviour
         {
             if(powerUp == "none")
             {
-                if(!sounds.noPow1.isPlaying)
+                if(!SFXSounds.isPlaying)
                 {
-                    sounds.noPow1.PlayOneShot(sounds.noPow1.clip);
+                    SFXSounds.clip = sounds.noPow1; //PRIORITY SFX
+                    SFXSounds.PlayOneShot(sounds.noPow1);
                 }                
             }
             else if(powerUp == "SuperJump")
             {
                 rb.AddForce(-groundAt * phys.superJumpPower);
-                sounds.superJump1.PlayOneShot(sounds.superJump1.clip);
+                SFXSounds.PlayOneShot(sounds.superJump1);
                 powerUp = "none";
             }
             else if(powerUp == "GravityMarble")
@@ -209,39 +205,47 @@ public class PlayerControl : MonoBehaviour
                     }
 
                     rb.AddForce(Quaternion.Euler(0.0f, cam.transform.rotation.eulerAngles.y, 0.0f) * (push * phys.fPush));
-                    sounds.fPush1.PlayOneShot(sounds.fPush1.clip);
+                    SFXSounds.PlayOneShot(sounds.fPush1);
                     phys.fPushes--;
                     fPushLock = true;
                     StartCoroutine(fPushCoolDowns());
                 }
                 else
                 {
-                    sounds.noPow1.PlayOneShot(sounds.noPush1.clip);
+                    SFXSounds.PlayOneShot(sounds.noPush1);
                 }
             }
             else
             {
-                sounds.noPow1.PlayOneShot(sounds.noPush1.clip);
+                SFXSounds.PlayOneShot(sounds.noPush1);
             }                     
         }
 
         //Rolling noise
         if(grounded)
         {
-            if(!sounds.rolling1.isPlaying)
+            if(!moveSounds.isPlaying)
             {
-                sounds.rolling1.Play();
+                if(moveSounds.clip != sounds.rolling1)
+                {
+                    moveSounds.clip = sounds.rolling1;
+                }
+                moveSounds.Play();
             }
 
-            pitch = Mathf.Lerp(pitch, ( Random.value / 2.0f ) + 0.25f, phys.rPfactor);
+            pitch = Mathf.Lerp(pitch, Random.Range(0.2f, 1.0f), phys.rPslide);
             volume = rb.velocity.magnitude * phys.rVfactor;
-            sounds.rolling1.pitch = pitch;
-            sounds.rolling1.volume = volume;
-        }
+            moveSounds.pitch = pitch;
+            moveSounds.volume = volume;
+        }        
         else
         {
-            sounds.rolling1.Pause();           
-        }        
+            if(moveSounds.isPlaying && moveSounds.clip == sounds.rolling1 )
+            {
+                moveSounds.Pause();
+            }                       
+        }
+                
     }
 
     void OnCollsionEnter(Collision other)
@@ -249,14 +253,20 @@ public class PlayerControl : MonoBehaviour
        if(other.gameObject.layer == 0)
         {
             grounded = true;
-            
-            sounds.collision1.PlayOneShot(sounds.collision1.clip);
+            moveSounds.volume = Mathf.Clamp(moveSounds.volume, 0.5f, 0.7f);
+            moveSounds.PlayOneShot(sounds.collision1);            
         }
     }
 
     //Called once per frame for each touching body
     void OnCollisionStay(Collision other)
     {
+        if(!grounded)
+        {
+            moveSounds.volume = Mathf.Clamp(moveSounds.volume, 0.5f, 0.7f);
+            moveSounds.PlayOneShot(sounds.collision1);
+        }
+
         //0 == ground layer
         if(other.gameObject.layer == 0)
         {
@@ -283,6 +293,16 @@ public class PlayerControl : MonoBehaviour
                     groundAt = line;
                     break;
                 }
+                else
+                {
+                    //Debug.Log("On Ceiling!");
+                    if(gravMarbleActive)
+                    {
+                        grounded = true;
+                        groundAt = line;
+                        break;
+                    }
+                }
             }          
         }
     }
@@ -294,7 +314,7 @@ public class PlayerControl : MonoBehaviour
         {
             //Left the ground
             grounded = false; 
-            StartCoroutine(JumpSoundDelay());
+            //StartCoroutine(JumpSoundDelay());
         }
     }
 
@@ -304,7 +324,7 @@ public class PlayerControl : MonoBehaviour
         if(other.gameObject.CompareTag("PickUp"))
         {
             other.gameObject.SetActive(false);
-            sounds.pickupSound.PlayOneShot(sounds.pickupSound.clip);
+            SFXSounds.PlayOneShot(sounds.pickupSound);
             PUcount++;            
         }
         else if(other.gameObject.CompareTag("PowerUp"))
