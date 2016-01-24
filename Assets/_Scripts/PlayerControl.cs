@@ -15,7 +15,7 @@ public class PlayerControl : MonoBehaviour
     [System.Serializable]
     public class MarblePhys
     {
-        public float power, hopPower, airPower, rPfactor, rPslide, rVfactor, superJumpPower, gravMarbleDur, gravMarbleGrav, fPush, fPushCDTime, fPushRCTime;
+        public float power, hopPower, airPower, rPfactor, rPslide, rVfactor, epsilon, superJumpPower, gravMarbleDur, gravMarbleGrav, fPush, fPushCDTime, fPushRCTime;
         public int fPushes;
     }
     public MarblePhys phys = new MarblePhys();
@@ -26,24 +26,14 @@ public class PlayerControl : MonoBehaviour
     [System.Serializable]
     public class audioClips
     {
-        public AudioClip pickupSound;
-        public AudioClip rolling1;
-        public AudioClip collision1;
-        public AudioClip jump1;
-        public AudioClip superJumpcol1;
-        public AudioClip superJump1;
-        public AudioClip gravMarbleCol1;
-        public AudioClip gravMarble1;
-        public AudioClip fPush1;
-        public AudioClip noPow1;
-        public AudioClip noPush1;
+        public AudioClip pickupSound, rolling1, collision1, jump1, superJumpcol1, superJump1, gravMarbleCol1, gravMarble1, fPush1, noPow1, noPush1;
     }
     public audioClips sounds = new audioClips();
 
     private Rigidbody rb;
     private Vector3 push, groundAt;    
     private float x, z, volume, pitch;    
-    private bool a, lBump, rBump, grounded, gravMarbleActive, fPushLock;
+    private bool a, lBump, rBump, grounded, maybeAir, gravMarbleActive, fPushLock;
 
     // Use this for initialization
     void Start()
@@ -57,21 +47,43 @@ public class PlayerControl : MonoBehaviour
 
         PUcount = 0;        
 
-        grounded = false;
+        grounded = true;
         gravMarbleActive = false;
         fPushLock = false;
 
-        powerUp = "none";
+        powerUp = "none";        
     }
 
     void getInput()
-    {        
+    {
         //Get user input
         x = Input.GetAxis("Horizontal");
         z = Input.GetAxis("Vertical");
-        a = Input.GetButtonDown("Jump");
-        lBump = Input.GetButtonDown("Power");
-        rBump = Input.GetButtonDown("ForcePush");               
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            a = true;
+        }
+        if (Input.GetButtonUp("Jump"))
+        {
+            a = false;
+        }
+        if (Input.GetButtonDown("Power"))
+        {
+            lBump = true;
+        }
+        if (Input.GetButtonUp("Power"))
+        {
+            lBump = false;
+        }
+        if (Input.GetButtonDown("ForcePush"))
+        {
+            rBump = true;
+        }
+        if (Input.GetButtonUp("ForcePush"))
+        {
+            rBump = false;
+        }                       
     }
 
     void setPower(object[] parameters)
@@ -115,8 +127,9 @@ public class PlayerControl : MonoBehaviour
     {
         rb.useGravity = false;
         gravMarbleActive = true;
-        moveSounds.clip = sounds.gravMarble1;
-        moveSounds.Play();
+        SFXSounds.clip = sounds.gravMarble1;
+        SFXSounds.loop = true;
+        SFXSounds.Play();
         float startTime = Time.time;
         while(Time.time < startTime + phys.gravMarbleDur)
         {
@@ -125,7 +138,8 @@ public class PlayerControl : MonoBehaviour
         }
         rb.useGravity = true;
         gravMarbleActive = false;
-        moveSounds.clip = sounds.rolling1;
+        SFXSounds.loop = false;
+        SFXSounds.Stop();        
     }
 
     // Update is called once per frame
@@ -145,11 +159,25 @@ public class PlayerControl : MonoBehaviour
         //Account for grav marble
         if(gravMarbleActive)
         {
-            push = Quaternion.Euler(0.0f, 0.0f, -Vector3.Angle(Vector3.down, groundAt)) * push;         
+            push = Quaternion.Euler(0.0f, 0.0f, -Vector3.Angle(Vector3.down, groundAt)) * push;
+            if(groundAt.y > 0.9f)
+            {
+                push.z = -push.z;
+            }         
         }
 
         //Apply torque (Adjust push to account for camera rotation)
         rb.AddTorque(Quaternion.Euler(0.0f, cam.transform.rotation.eulerAngles.y + 90.0f, 0.0f) * (push * phys.power));
+
+        if(maybeAir)
+        {
+            //Check if touching somewhere else...
+            if(!Physics.CheckSphere(transform.position, (transform.localScale.x / 2.0f) + phys.epsilon, LayerMask.GetMask("Default"), QueryTriggerInteraction.Ignore)) //assuming a spherical marble
+            {
+                //Left the ground
+                grounded = false;
+            }
+        }
 
         //If airborne, add aftertouch
         if(!grounded)
@@ -159,7 +187,8 @@ public class PlayerControl : MonoBehaviour
 
         //Jump
         if (a && grounded == true)
-        {            
+        {
+            a = false;            
             rb.AddForce(-groundAt * phys.hopPower);
             if(SFXSounds.clip != sounds.jump1 )
             {  
@@ -168,37 +197,14 @@ public class PlayerControl : MonoBehaviour
             SFXSounds.PlayOneShot(sounds.jump1);            
         }
 
-        //Deployables
-        if(lBump)
-        {
-            if(powerUp == "none")
-            {
-                if(!SFXSounds.isPlaying)
-                {
-                    SFXSounds.clip = sounds.noPow1; //PRIORITY SFX
-                    SFXSounds.PlayOneShot(sounds.noPow1);
-                }                
-            }
-            else if(powerUp == "SuperJump")
-            {
-                rb.AddForce(-groundAt * phys.superJumpPower);
-                SFXSounds.PlayOneShot(sounds.superJump1);
-                powerUp = "none";
-            }
-            else if(powerUp == "GravityMarble")
-            {
-                StartCoroutine(gravityMarble());
-                powerUp = "none";
-            }            
-        }
-
         //Force push
         if(rBump)
         {
             if(!fPushLock && (push.magnitude != 0.0f))
             {                
                 if (phys.fPushes > 0)
-                {               
+                {
+                    rBump = false;               
                     if(gravMarbleActive)
                     {
                         push = Quaternion.Euler(-Vector3.Angle(Vector3.down, groundAt), 0.0f, Vector3.Angle(Vector3.down, groundAt)) * push;                   
@@ -221,8 +227,29 @@ public class PlayerControl : MonoBehaviour
             }                     
         }
 
+        //Deployables
+        if (lBump)
+        {
+            lBump = false;
+            if (powerUp == "none")
+            {
+                SFXSounds.PlayOneShot(sounds.noPow1);
+            }
+            else if (powerUp == "SuperJump")
+            {
+                rb.AddForce(-groundAt * phys.superJumpPower);
+                SFXSounds.PlayOneShot(sounds.superJump1);
+                powerUp = "none";
+            }
+            else if (powerUp == "GravityMarble")
+            {
+                StartCoroutine(gravityMarble());
+                powerUp = "none";
+            }
+        }
+
         //Rolling noise
-        if(grounded)
+        if (grounded)
         {
             if(!moveSounds.isPlaying)
             {
@@ -252,8 +279,11 @@ public class PlayerControl : MonoBehaviour
     {
        if(other.gameObject.layer == 0)
         {
+            Debug.Log("GROUND COLLISION ENTER!!!!!!!!!!!!!!THIS BASICALLY NEVER HAPPENS!!!!!!!!");         
             grounded = true;
+            maybeAir = false;
             moveSounds.volume = Mathf.Clamp(moveSounds.volume, 0.5f, 0.7f);
+            moveSounds.pitch = Mathf.Clamp(moveSounds.pitch, 0.5f, 1.0f);
             moveSounds.PlayOneShot(sounds.collision1);            
         }
     }
@@ -263,9 +293,11 @@ public class PlayerControl : MonoBehaviour
     {
         if(!grounded)
         {
+            //Debug.Log("GROUND COLLISION STAY!");
             moveSounds.volume = Mathf.Clamp(moveSounds.volume, 0.5f, 0.7f);
+            moveSounds.pitch = Mathf.Clamp(moveSounds.pitch, 0.5f, 1.0f);
             moveSounds.PlayOneShot(sounds.collision1);
-        }
+        }        
 
         //0 == ground layer
         if(other.gameObject.layer == 0)
@@ -283,6 +315,7 @@ public class PlayerControl : MonoBehaviour
                 {
                     //Debug.Log("On Wall!");
                     grounded = true;
+                    maybeAir = false;
                     groundAt = line;
                     break;
                 }
@@ -290,6 +323,7 @@ public class PlayerControl : MonoBehaviour
                 {
                     //Debug.Log("On Ground!");
                     grounded = true;
+                    maybeAir = false;
                     groundAt = line;
                     break;
                 }
@@ -299,6 +333,7 @@ public class PlayerControl : MonoBehaviour
                     if(gravMarbleActive)
                     {
                         grounded = true;
+                        maybeAir = false;
                         groundAt = line;
                         break;
                     }
@@ -307,16 +342,15 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    //TODO: WHY DOESN'T THIS WORK????
     void OnCollisionExit(Collision other)
-    {
+    {        
         //0 == ground layer
         if(other.gameObject.layer == 0)
         {
-            //Left the ground
-            grounded = false; 
-            //StartCoroutine(JumpSoundDelay());
+            maybeAir = true;         
         }
-    }
+    }    
 
     //Called when the collider other enters a trigger
     void OnTriggerEnter(Collider other)
