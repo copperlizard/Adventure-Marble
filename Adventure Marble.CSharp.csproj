@@ -64,15 +64,16 @@
   <ItemGroup>
     <Compile Include="Assets\_Scripts\ButtonBrancher.cs" />
     <Compile Include="Assets\_Scripts\CamControl.cs" />
-    <Compile Include="Assets\_Scripts\FPScounter.cs" />
+    <Compile Include="Assets\_Scripts\DataManager.cs" />
     <Compile Include="Assets\_Scripts\HUDScript.cs" />
+    <Compile Include="Assets\_Scripts\LevelData.cs" />
     <Compile Include="Assets\_Scripts\LoadLevelButton.cs" />
-    <Compile Include="Assets\_Scripts\MenuClick.cs" />
     <Compile Include="Assets\_Scripts\PauseScreen.cs" />
     <Compile Include="Assets\_Scripts\PlayerControl.cs" />
     <Compile Include="Assets\_Scripts\PowerUp.cs" />
     <Compile Include="Assets\_Scripts\QuitButton.cs" />
     <Compile Include="Assets\_Scripts\ResumeGameTime.cs" />
+    <Compile Include="Assets\_Scripts\SaveData.cs" />
     <Compile Include="Assets\_Scripts\chasePlayer.cs" />
     <Compile Include="Assets\_Scripts\rotator.cs" />
   </ItemGroup>

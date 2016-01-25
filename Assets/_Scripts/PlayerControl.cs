@@ -189,11 +189,7 @@ public class PlayerControl : MonoBehaviour
         if (a && grounded == true)
         {
             a = false;            
-            rb.AddForce(-groundAt * phys.hopPower);
-            if(SFXSounds.clip != sounds.jump1 )
-            {  
-                SFXSounds.clip = sounds.jump1;
-            }            
+            rb.AddForce(-groundAt * phys.hopPower);                       
             SFXSounds.PlayOneShot(sounds.jump1);            
         }
 
