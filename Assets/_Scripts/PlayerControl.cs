@@ -20,8 +20,7 @@ public class PlayerControl : MonoBehaviour
     }
     public MarblePhys phys = new MarblePhys();
 
-    public AudioSource moveSounds;
-    public AudioSource SFXSounds;
+    public AudioSource moveSounds, SFXSounds;
 
     [System.Serializable]
     public class audioClips

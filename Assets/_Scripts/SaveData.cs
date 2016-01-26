@@ -5,8 +5,7 @@ using System.Collections;
 public class SaveData
 {
     public static SaveData current;
-
-    static public int numLvls = 10;
+    
     static private int numTimes = 10;
 
     public int lvlID;
@@ -14,8 +13,10 @@ public class SaveData
     public float[] times;
     public string[] names;
 
-    SaveData()
-    {       
+    public SaveData()
+    {
+        //Debug.Log("New SaveData()!");  //REMOVE THIS LATER!!!
+               
         beat = false;
         lvlID = -1; //assign somewhere else...
 
@@ -24,7 +25,7 @@ public class SaveData
 
         for(int i = 0; i < numTimes; i++)
         {
-            times[i] = 100000000.0f;
+            times[i] = 1000000.0f;
             names[i] = "Default";
         }
     }    

@@ -3,7 +3,8 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class ButtonBrancher : MonoBehaviour {
+public class ButtonBrancher : MonoBehaviour
+{
 
     public enum ScaleMode { whmatch, whindependent }
     public bool revealOnStart;

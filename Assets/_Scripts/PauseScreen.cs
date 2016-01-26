@@ -9,20 +9,22 @@ public class PauseScreen : MonoBehaviour {
 
     public GameObject menuButton;
 
+    private HUDScript HUD;
     private bool press, pause, change;
     
 	// Use this for initialization
 	void Start ()
     {
         press = pause = change = false;
-	}
+        HUD = gameObject.GetComponent<HUDScript>();
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        press = Input.GetButtonDown("Pause");
+        press = Input.GetButtonDown("Pause"); //improve this later
 
-        if(press)
+        if(press && !HUD.gameOver) 
         {
             pause = !pause;
             change = true;

@@ -9,26 +9,10 @@ public static class DataManager
     public static List<SaveData> saves = new List<SaveData>();
     public static bool loaded = false;
 
-    public static void save(SaveData toSave, int saveAt)
+    static public int numLvls = 10;
+
+    public static void save()
     {
-        //Check index is valid
-        if(saveAt < 0)
-        {
-            Debug.Log("INVALID SAVE INDEX!");
-            return;
-        }
-
-        //Check if index in save current data range
-        while(saveAt + 1 > saves.Count)
-        {
-            //Add null data entries until at desired index
-            saves.Add(null);
-        }
-
-        //Store data at index
-        toSave.lvlID = saveAt; //MAYBE DO THIS SOMEWHERE ELSE!!!
-        saves[saveAt] = toSave;
-
         //Save data to computer   TRY TO FIND A WAY TO SAVE ONE PIECE OF THE ARRAY AT A TIME
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/savedGames.gd");
@@ -40,10 +24,31 @@ public static class DataManager
     {
         if(File.Exists(Application.persistentDataPath + "/savedGames.gd"))
         {
+            //Debug.Log("LOADING FILE!");
+
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/savedGames.gd", FileMode.Open);
             DataManager.saves = (List<SaveData>)bf.Deserialize(file);
             file.Close();
         }
+        else
+        {
+            //Debug.Log("FILE DOES NOT EXIST!\nCreating Save Data!");
+            resetSave();
+        }
+    }
+    
+    public static void resetSave()
+    {
+        //Debug.Log("clearing save data!");
+        saves.Clear(); //ensure fresh list
+        for (int i = 0; i < numLvls; i++)
+        {
+            saves.Add(new SaveData());  //New lvl save data
+            saves[i].lvlID = i;         //Assign lvl ID
+
+            //Debug.Log("new SaveData.lvlID == " + saves[i].lvlID.ToString());
+        }
+        save();
     }	
 }
