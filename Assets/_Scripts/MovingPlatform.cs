@@ -6,31 +6,43 @@ public class MovingPlatform : MonoBehaviour
     [System.Serializable]
     public class moveProperties
     {
-        public enum translationBehavior { SMOOTH, LINEAR, NONE }
+        public enum translationBehavior { LINEAR, SMOOTH, NONE }
         public enum rotationBehavior { ROTATE, OSCILATE, NONE };
         public translationBehavior tranBehavior;
         public rotationBehavior rotBehavior;
         public Vector3 tranAxis, rotAxis;
-        public float tTime, tSpeed, tDist, rSpeed, rMin, rMax;        
+        public float tSpeed, tDist, tPad, rSpeed, rMin, rMax;        
     }
     public moveProperties moveProps = new moveProperties();
 
     private Rigidbody platformBody;
-    private Vector3 startPos, tarPos, refVel, lastMove;
-    private float rotAng;
-    private int rotDir;
-
-    private static float epsilon = 0.175f;
+    private Vector3 startPos, tarPos, midPos, refVel;
+    private float tarVel, rotAng, rotCounter;
+    private int rotDir;    
 
 	// Use this for initialization
 	void Start ()
     {
+        //Normalize axes
         moveProps.tranAxis = moveProps.tranAxis.normalized;
         moveProps.rotAxis = moveProps.rotAxis.normalized;
+
+        //Find/store pos's
         startPos = transform.position;
-        tarPos = transform.position + (moveProps.tranAxis * moveProps.tDist);        
+        tarPos = transform.position + (moveProps.tranAxis * moveProps.tDist);
+        Vector3 line = tarPos - startPos;
+        line /= 2.0f;
+        midPos = startPos + line;
+
+        //Set up tran vars
+        tarVel = moveProps.tSpeed;
+        
+        //Set up rot vars        
         rotAng = 0.0f;
+        rotCounter = 0.0f;
         rotDir = 1;
+
+        //Get platform rigid body
         platformBody = gameObject.GetComponent<Rigidbody>();
 	}
 	
@@ -55,27 +67,36 @@ public class MovingPlatform : MonoBehaviour
     }
 
     void translate()
-    {        
-        float d = (transform.position - tarPos).magnitude;
-        Debug.Log(gameObject.name + " d == " + d.ToString());
+    {
+        //d from mid pos        
+        float d = (transform.position - midPos).magnitude;
+        float dFar = ((moveProps.tDist / 2.0f) - moveProps.tPad);
+        //Debug.Log(gameObject.name + " d == " + d.ToString());
 
-        if(d <= epsilon)
+        //If too far from d
+        if(d >= dFar)
         {
-            //Debug.Log(gameObject.name + " reversing direction!");
-            moveProps.tranAxis = -moveProps.tranAxis;
-            Vector3 temp = tarPos;
-            tarPos = startPos;
-            startPos = temp;
+            //Find line pointing to midPos
+            Vector3 line = midPos - transform.position;
+            line.Normalize();
+
+            //If line and tranAxis pointing different directions
+            if(Vector3.Dot(line, moveProps.tranAxis) < 1)
+            {
+                //Reverse tranAxis
+                moveProps.tranAxis = -moveProps.tranAxis;
+            }
         }
 
         switch (moveProps.tranBehavior)
-        {
-            case moveProperties.translationBehavior.SMOOTH:
-                //platformBody.velocity = moveProps.tranAxis * moveProps.tSpeed * smooth(0.0f, moveProps.tDist, d);                
-                break;
+        {            
             case moveProperties.translationBehavior.LINEAR:
-                //platformBody.velocity = moveProps.tranAxis * moveProps.tSpeed;
-                platformBody.AddForce(moveProps.tranAxis * (moveProps.tSpeed - platformBody.velocity.magnitude), ForceMode.VelocityChange);
+                platformBody.MovePosition(transform.position + (moveProps.tranAxis * moveProps.tSpeed));                
+                break;
+            case moveProperties.translationBehavior.SMOOTH:                                     //THIS DOES NOT WORK WELL!!!
+                //tarVel = moveProps.tSpeed * Mathf.Clamp(1.0f - d / dFar, 0.3f, 1.0f);
+                tarVel = moveProps.tSpeed * Mathf.Clamp(curve(d, dFar), 0.3f, 1.0f);
+                platformBody.MovePosition(transform.position + (moveProps.tranAxis * tarVel));
                 break;
             case moveProperties.translationBehavior.NONE:
                 break;
@@ -85,20 +106,28 @@ public class MovingPlatform : MonoBehaviour
                
     }
 
-    void rotate() //change this to use torque...
+    float curve(float d, float dFar)
     {
-        /*
+        float t = d / dFar;
+        return 1.0f - (-((t - 1.0f) * (t - 1.0f)) + 1.0f);
+    }
+
+    void rotate() //change this to use torque...
+    {        
         switch (moveProps.rotBehavior)
         {
             case moveProperties.rotationBehavior.ROTATE:
-                rotAng += moveProps.rSpeed * Time.deltaTime * rotDir;
-                transform.Rotate(moveProps.rotAxis * moveProps.rSpeed * Time.deltaTime);
+                rotAng = moveProps.rSpeed * Time.deltaTime * rotDir;
+                rotCounter += rotAng;
+                platformBody.MoveRotation(platformBody.rotation * Quaternion.Euler(moveProps.rotAxis * rotAng));
                 break;
             case moveProperties.rotationBehavior.OSCILATE:
-                rotAng += moveProps.rSpeed * Time.deltaTime * rotDir;
-                transform.Rotate(moveProps.rotAxis * moveProps.rSpeed * Time.deltaTime * rotDir);
-                if(rotAng < moveProps.rMin || rotAng > moveProps.rMax)
+                rotAng = moveProps.rSpeed * Time.deltaTime * rotDir;
+                rotCounter += rotAng;
+                platformBody.MoveRotation(platformBody.rotation * Quaternion.Euler(moveProps.rotAxis * rotAng));
+                if(rotCounter < moveProps.rMin || rotCounter > moveProps.rMax)
                 {
+                    Debug.Log("Flipping Rotation!");
                     rotDir = -rotDir;
                 }                
                 break;
@@ -109,8 +138,7 @@ public class MovingPlatform : MonoBehaviour
 
         }
 
-        clampAngle(rotAng, -360.0f, 360.0f);
-        */
+        clampAngle(rotCounter, -360.0f, 360.0f);        
     }
 
     float clampAngle(float ang, float min, float max)
@@ -124,33 +152,5 @@ public class MovingPlatform : MonoBehaviour
             ang -= 360.0f;
         }
         return Mathf.Clamp(ang, min, max);
-    }
-
-    float smooth(float a, float b, float t)
-    {
-        b -= a;
-        t -= a;
-        a = 0.0f;
-        t /= b;
-        b /= b;
-        return 1.0f - Mathf.Abs(t - 0.5f);
-    }
-
-    void OnCollisionStay(Collision other)
-    {
-        //Platforms "carry" player
-        if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {            
-           
-        }
-    }
-
-    void OnCollisionExit(Collision other)
-    {
-        //Platforms "carry" player
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
-            
-        }
     }
 }

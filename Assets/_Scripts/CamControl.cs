@@ -4,6 +4,7 @@ using System.Collections;
 public class CamControl : MonoBehaviour {
 
     public GameObject player;
+    public string BGmusic;
     public float fDist, minDist, maxDist, xspeed, yspeed, ymin, ymax, hstart, vstart, damp;
 
     private Quaternion rotation;
@@ -27,7 +28,7 @@ public class CamControl : MonoBehaviour {
 
         rotation = Quaternion.Euler(v, h, 0.0f);
 
-        paused = false;
+        paused = false;         
     }
 
     public void pause( bool state )
@@ -67,29 +68,37 @@ public class CamControl : MonoBehaviour {
        
     void LateUpdate()
     {
-        //Build rotation using input
-        rotation = Quaternion.Slerp(rotation, Quaternion.Euler(v, h, 0.0f), damp * Time.deltaTime);
-        //rotation = Quaternion.Euler(v, h, 0.0f);
-
-        //Set desired dist
-        dist = fDist;
-
-        //Place and rotate camera transform based on player transform and user input
-        transform.position = rotation * (new Vector3(0.0f, 0.0f, -dist)) + player.transform.position;
-        //transform.position = Vector3.SmoothDamp(transform.position, rotation * (new Vector3(0.0f, 0.0f, -dist)) + player.transform.position, ref refVel, 0.01f);
-        transform.rotation = rotation;
-        
-        //Check for intersection along view ray and move camera if necessary
-        if (Physics.Raycast(player.transform.position, transform.position - player.transform.position, out interAt))
+        if(player.transform.position.y >= 0.0f)
         {
-            //Ignore intersections with game pieces
-            if( interAt.collider.gameObject.layer != 9 )
+            //Build rotation using input
+            rotation = Quaternion.Slerp(rotation, Quaternion.Euler(v, h, 0.0f), damp * Time.deltaTime);
+            //rotation = Quaternion.Euler(v, h, 0.0f);
+            transform.rotation = rotation;
+
+            //Set desired dist
+            dist = fDist;
+
+            //Place and rotate camera transform based on player transform and user input
+            transform.position = rotation * (new Vector3(0.0f, 0.0f, -dist)) + player.transform.position;
+            //transform.position = Vector3.SmoothDamp(transform.position, rotation * (new Vector3(0.0f, 0.0f, -dist)) + player.transform.position, ref refVel, 0.01f);
+
+
+            //Check for intersection along view ray and move camera if necessary
+            if (Physics.Raycast(player.transform.position, transform.position - player.transform.position, out interAt))
             {
-                dist = Mathf.Clamp(interAt.distance - 0.1f, minDist, maxDist);
-                transform.position = rotation * (new Vector3(0.0f, 0.0f, -dist)) + player.transform.position;
-                //transform.position = Vector3.SmoothDamp(transform.position, rotation * (new Vector3(0.0f, 0.0f, -dist)) + player.transform.position, ref refVel, 0.01f);
-            }            
-        }        
+                //Ignore intersections with game pieces
+                if (interAt.collider.gameObject.layer != 9)
+                {
+                    dist = Mathf.Clamp(interAt.distance - 0.1f, minDist, maxDist);
+                    transform.position = rotation * (new Vector3(0.0f, 0.0f, -dist)) + player.transform.position;
+                    //transform.position = Vector3.SmoothDamp(transform.position, rotation * (new Vector3(0.0f, 0.0f, -dist)) + player.transform.position, ref refVel, 0.01f);
+                }
+            }
+        }
+        else
+        {
+            transform.LookAt(player.transform.position);
+        }                
     }
 }
 

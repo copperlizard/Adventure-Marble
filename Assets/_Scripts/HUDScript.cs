@@ -93,7 +93,7 @@ public class HUDScript : MonoBehaviour
         }
         else
         {
-            HUD.centerText.text = ":(";
+            HUD.centerText.text = "g g";
             yield return new WaitForSeconds(5);
             SceneManager.LoadScene(lvlToload);
         }

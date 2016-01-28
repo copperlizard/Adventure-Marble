@@ -9,8 +9,8 @@ public class PlayerControl : MonoBehaviour
 
     [HideInInspector]
     public string powerUp;
-    [HideInInspector]
-    public int PUcount;
+    [HideInInspector]    
+    public int PUcount;    
 
     [System.Serializable]
     public class MarblePhys
@@ -48,7 +48,7 @@ public class PlayerControl : MonoBehaviour
 
         grounded = true;
         gravMarbleActive = false;
-        fPushLock = false;
+        fPushLock = false;        
 
         powerUp = "none";        
     }
@@ -256,7 +256,9 @@ public class PlayerControl : MonoBehaviour
             }
 
             pitch = Mathf.Lerp(pitch, Random.Range(0.2f, 1.0f), phys.rPslide);
-            volume = rb.velocity.magnitude * phys.rVfactor;
+            //volume = rb.velocity.magnitude * phys.rVfactor;
+            //Debug.Log(rb.GetRelativePointVelocity(transform.position).magnitude.ToString());
+            volume = (rb.GetRelativePointVelocity(transform.position).magnitude / 50.0f) * phys.rVfactor;            
             moveSounds.pitch = pitch;
             moveSounds.volume = volume;
         }        
