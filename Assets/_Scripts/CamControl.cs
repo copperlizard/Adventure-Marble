@@ -8,7 +8,7 @@ public class CamControl : MonoBehaviour {
     public float fDist, minDist, maxDist, xspeed, yspeed, ymin, ymax, hstart, vstart, damp;
 
     private Quaternion rotation;
-    private Vector3 viewLine, refVel;
+    private Vector3 viewLine;
     private RaycastHit interAt;
     private float h, v, dist;
     private bool paused;
@@ -82,7 +82,6 @@ public class CamControl : MonoBehaviour {
             transform.position = rotation * (new Vector3(0.0f, 0.0f, -dist)) + player.transform.position;
             //transform.position = Vector3.SmoothDamp(transform.position, rotation * (new Vector3(0.0f, 0.0f, -dist)) + player.transform.position, ref refVel, 0.01f);
 
-
             //Check for intersection along view ray and move camera if necessary
             if (Physics.Raycast(player.transform.position, transform.position - player.transform.position, out interAt))
             {
@@ -101,5 +100,3 @@ public class CamControl : MonoBehaviour {
         }                
     }
 }
-
-//transform.position = Vector3.Lerp(transform.position, rotation * (new Vector3(0.0f, 0.0f, -dist)) + player.transform.position, damp * Time.fixedDeltaTime);

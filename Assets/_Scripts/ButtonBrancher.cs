@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 public class ButtonBrancher : MonoBehaviour
 {
-
     public enum ScaleMode { whmatch, whindependent }
     public bool revealOnStart;
 

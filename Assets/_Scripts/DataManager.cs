@@ -23,31 +23,25 @@ public static class DataManager
     public static void load()
     {
         if(File.Exists(Application.persistentDataPath + "/savedGames.gd"))
-        {
-            //Debug.Log("LOADING FILE!");
-
+        {         
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/savedGames.gd", FileMode.Open);
             DataManager.saves = (List<SaveData>)bf.Deserialize(file);
             file.Close();
         }
         else
-        {
-            //Debug.Log("FILE DOES NOT EXIST!\nCreating Save Data!");
+        {            
             resetSave();
         }
     }
     
     public static void resetSave()
-    {
-        //Debug.Log("clearing save data!");
+    {        
         saves.Clear(); //ensure fresh list
         for (int i = 0; i < numLvls; i++)
         {
             saves.Add(new SaveData());  //New lvl save data
-            saves[i].lvlID = i;         //Assign lvl ID
-
-            //Debug.Log("new SaveData.lvlID == " + saves[i].lvlID.ToString());
+            saves[i].lvlID = i;
         }
         save();
     }	

@@ -68,6 +68,7 @@
     <Compile Include="Assets\_Scripts\HUDScript.cs" />
     <Compile Include="Assets\_Scripts\LevelData.cs" />
     <Compile Include="Assets\_Scripts\LoadLevelButton.cs" />
+    <Compile Include="Assets\_Scripts\MenuJoypadControls.cs" />
     <Compile Include="Assets\_Scripts\MovingPlatform.cs" />
     <Compile Include="Assets\_Scripts\PauseScreen.cs" />
     <Compile Include="Assets\_Scripts\PlayerControl.cs" />

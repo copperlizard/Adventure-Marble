@@ -15,8 +15,6 @@ public class SaveData
 
     public SaveData()
     {
-        //Debug.Log("New SaveData()!");  //REMOVE THIS LATER!!!
-               
         beat = false;
         lvlID = -1; //assign somewhere else...
 

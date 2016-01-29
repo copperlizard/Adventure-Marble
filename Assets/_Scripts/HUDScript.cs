@@ -9,6 +9,7 @@ public class HUDScript : MonoBehaviour
     public GameObject player;
     public int PUtot;
     public int thisLevel;
+    [HideInInspector]
     public bool gameOver;
 
     [System.Serializable]
@@ -38,8 +39,6 @@ public class HUDScript : MonoBehaviour
                 {
                     newRecord = true;
 
-                    //Debug.Log("New Record == " + finishTime.ToString() + " at " + i.ToString());
-
                     //Store recs to move
                     int oldrecCount = DataManager.saves[thisLevel].times.Length - i;
                     float[] oldrecTimes = new float[oldrecCount];
@@ -47,23 +46,18 @@ public class HUDScript : MonoBehaviour
                     for(int j = 0; j < oldrecCount; j++)
                     {
                         oldrecTimes[j] = DataManager.saves[thisLevel].times[i + j];
-                        oldrecNames[j] = DataManager.saves[thisLevel].names[i + j];
-
-                        //Debug.Log("oldrecs[" + j.ToString() + "] == " + oldrecs[j].ToString());
+                        oldrecNames[j] = DataManager.saves[thisLevel].names[i + j];                        
                     }
 
                     //Store new rec
                     DataManager.saves[thisLevel].times[i] = finishTime;
                     DataManager.saves[thisLevel].names[i] = PlayerPrefs.GetString("PlayerName");
-                    //Debug.Log("DataManager.saves[" + thisLevel.ToString() + "].times[" + i.ToString() + "] == " + DataManager.saves[thisLevel].times[i].ToString());
-
+                    
                     //Store all but 1 of the old recs
                     for (int j = 0; j < oldrecCount - 1; j++)
                     {
                         DataManager.saves[thisLevel].times[i + j + 1] = oldrecTimes[j];
                         DataManager.saves[thisLevel].names[i + j + 1] = oldrecNames[j];
-
-                        //Debug.Log("DataManager.saves[" + thisLevel.ToString() + "].times[" + (i + j + 1).ToString() +"] == " + DataManager.saves[thisLevel].times[i + j + 1].ToString());
                     }
 
                     //Save data

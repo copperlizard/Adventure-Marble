@@ -41,11 +41,13 @@ public class PauseScreen : MonoBehaviour {
                 cam.BroadcastMessage("pause", true);
                 pausedText.text = "PAUSED";
                 menuButton.SetActive(true);
+                gameObject.GetComponent<MenuJoypadControls>().engaged = true;
             }
             else
             {
                 if (pausedText.text == "PAUSED")
                 {
+                    gameObject.GetComponent<MenuJoypadControls>().engaged = false;
                     Time.timeScale = 1.0f;
                     AudioListener.pause = false;
                     Cursor.visible = false;

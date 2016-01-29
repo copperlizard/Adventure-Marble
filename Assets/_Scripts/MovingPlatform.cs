@@ -112,7 +112,7 @@ public class MovingPlatform : MonoBehaviour
         return 1.0f - (-((t - 1.0f) * (t - 1.0f)) + 1.0f);
     }
 
-    void rotate() //change this to use torque...
+    void rotate()
     {        
         switch (moveProps.rotBehavior)
         {
