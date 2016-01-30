@@ -1,0 +1,145 @@
+fileFormatVersion: 2
+guid: 353484912968d36468d5eb36a6d6df8f
+timeCreated: 1454097203
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Circle
+    100002: Cylinder
+    100004: //RootNode
+    100006: PlatformA
+    100008: PlatformB
+    100010: PlatformC
+    100012: PlatformD
+    100014: PlatformE
+    100016: PlatformF
+    100018: PlatformG
+    100020: PlatformH
+    100022: PlatformI
+    100024: Tunnel
+    100026: PlatformJ
+    100028: PlatformK
+    400000: Circle
+    400002: Cylinder
+    400004: //RootNode
+    400006: PlatformA
+    400008: PlatformB
+    400010: PlatformC
+    400012: PlatformD
+    400014: PlatformE
+    400016: PlatformF
+    400018: PlatformG
+    400020: PlatformH
+    400022: PlatformI
+    400024: Tunnel
+    400026: PlatformJ
+    400028: PlatformK
+    2300000: Circle
+    2300002: Cylinder
+    2300004: PlatformA
+    2300006: PlatformB
+    2300008: PlatformC
+    2300010: PlatformD
+    2300012: PlatformE
+    2300014: PlatformF
+    2300016: PlatformG
+    2300018: PlatformH
+    2300020: PlatformI
+    2300022: Tunnel
+    2300024: PlatformJ
+    2300026: PlatformK
+    3300000: Circle
+    3300002: Cylinder
+    3300004: PlatformA
+    3300006: PlatformB
+    3300008: PlatformC
+    3300010: PlatformD
+    3300012: PlatformE
+    3300014: PlatformF
+    3300016: PlatformG
+    3300018: PlatformH
+    3300020: PlatformI
+    3300022: Tunnel
+    3300024: PlatformJ
+    3300026: PlatformK
+    4300000: PlatformI
+    4300002: PlatformH
+    4300004: PlatformG
+    4300006: PlatformF
+    4300008: PlatformE
+    4300010: PlatformD
+    4300012: PlatformC
+    4300014: PlatformB
+    4300016: PlatformA
+    4300018: Tunnel
+    4300020: Cylinder
+    4300022: Circle
+    4300024: PlatformK
+    4300026: PlatformJ
+    7400000: Default Take
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -3,8 +3,7 @@ using System.Collections;
 
 public class CamControl : MonoBehaviour {
 
-    public GameObject player;
-    public string BGmusic;
+    public GameObject player;    
     public float fDist, minDist, maxDist, xspeed, yspeed, ymin, ymax, hstart, vstart, damp;
 
     private Quaternion rotation;

@@ -119,7 +119,7 @@ public class HUDScript : MonoBehaviour
 	void Update ()
     {
         HUD.speedometer.text = rb.GetRelativePointVelocity(Vector3.zero).magnitude.ToString();
-        HUD.powerText.text = "PU:" + player.GetComponent<PlayerControl>().powerUp;
+        HUD.powerText.text = "Power:" + player.GetComponent<PlayerControl>().powerUp;
         HUD.FPcounter.text = "Pushes:" + player.GetComponent<PlayerControl>().phys.fPushes.ToString();
 
         deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
