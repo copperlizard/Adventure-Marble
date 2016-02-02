@@ -1,0 +1,165 @@
+fileFormatVersion: 2
+guid: 05a4c7e31eed0b24b80ba81efb66b043
+timeCreated: 1454179836
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Cube
+    100002: Cube_001
+    100004: Elevator
+    100006: //RootNode
+    100008: PlatformA
+    100010: PlatformB
+    100012: PlatformC
+    100014: PlatformD
+    100016: RampA
+    100018: RampB
+    100020: RampA_001
+    100022: PlatformE
+    100024: SpinningPlatform
+    100026: ClimbingWall
+    100028: MovingPlatform
+    100030: PlatformF
+    100032: PlatformG
+    100034: MovingPlatformA
+    100036: MovingPlatformB
+    400000: Cube
+    400002: Cube_001
+    400004: Elevator
+    400006: //RootNode
+    400008: PlatformA
+    400010: PlatformB
+    400012: PlatformC
+    400014: PlatformD
+    400016: RampA
+    400018: RampB
+    400020: RampA_001
+    400022: PlatformE
+    400024: SpinningPlatform
+    400026: ClimbingWall
+    400028: MovingPlatform
+    400030: PlatformF
+    400032: PlatformG
+    400034: MovingPlatformA
+    400036: MovingPlatformB
+    2300000: Cube
+    2300002: Cube_001
+    2300004: Elevator
+    2300006: PlatformA
+    2300008: PlatformB
+    2300010: PlatformC
+    2300012: PlatformD
+    2300014: RampA
+    2300016: RampB
+    2300018: RampA_001
+    2300020: PlatformE
+    2300022: SpinningPlatform
+    2300024: ClimbingWall
+    2300026: MovingPlatform
+    2300028: PlatformF
+    2300030: PlatformG
+    2300032: MovingPlatformA
+    2300034: MovingPlatformB
+    3300000: Cube
+    3300002: Cube_001
+    3300004: Elevator
+    3300006: PlatformA
+    3300008: PlatformB
+    3300010: PlatformC
+    3300012: PlatformD
+    3300014: RampA
+    3300016: RampB
+    3300018: RampA_001
+    3300020: PlatformE
+    3300022: SpinningPlatform
+    3300024: ClimbingWall
+    3300026: MovingPlatform
+    3300028: PlatformF
+    3300030: PlatformG
+    3300032: MovingPlatformA
+    3300034: MovingPlatformB
+    4300000: Cube_001
+    4300002: Cube
+    4300004: RampB
+    4300006: RampA
+    4300008: PlatformD
+    4300010: PlatformC
+    4300012: PlatformB
+    4300014: Elevator
+    4300016: PlatformA
+    4300018: RampA_001
+    4300020: PlatformE
+    4300022: SpinningPlatform
+    4300024: PlatformG
+    4300026: MovingPlatform
+    4300028: ClimbingWall
+    4300030: PlatformF
+    4300032: MovingPlatformB
+    4300034: MovingPlatformA
+    7400000: Default Take
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

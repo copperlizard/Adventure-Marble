@@ -24,6 +24,7 @@ public class HUDScript : MonoBehaviour
 
     IEnumerator EndDelay(int lvlToload, bool win = false)
     {
+        int iat = 0;
         if(win)
         {
             HUD.centerText.text = "You Win!";
@@ -38,6 +39,7 @@ public class HUDScript : MonoBehaviour
                 if (finishTime < DataManager.saves[thisLevel].times[i])
                 {
                     newRecord = true;
+                    iat = i;
 
                     //Store recs to move
                     int oldrecCount = DataManager.saves[thisLevel].times.Length - i;
@@ -76,7 +78,12 @@ public class HUDScript : MonoBehaviour
 
             for (int i = 0; i < 10; i++)
             {
-                scoreboard += "\n#" + i.ToString() + ": " + DataManager.saves[thisLevel].names[i] + " - "+ DataManager.saves[thisLevel].times[i].ToString();
+                string colMod = "";
+                if(i == iat)
+                {
+                    colMod = "<color=#FFFFFF>";
+                }
+                scoreboard += colMod + "\n#" + i.ToString() + ": " + DataManager.saves[thisLevel].names[i] + " - " + DataManager.saves[thisLevel].times[i].ToString() + ((colMod != "") ? "</color>":"");
             }
 
             HUD.centerText.text = scoreboard;

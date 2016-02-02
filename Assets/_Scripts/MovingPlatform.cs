@@ -91,7 +91,7 @@ public class MovingPlatform : MonoBehaviour
         switch (moveProps.tranBehavior)
         {            
             case moveProperties.translationBehavior.LINEAR:
-                platformBody.MovePosition(transform.position + (moveProps.tranAxis * moveProps.tSpeed));                
+                platformBody.MovePosition(transform.position + (moveProps.tranAxis * moveProps.tSpeed * Time.deltaTime));                
                 break;
             case moveProperties.translationBehavior.SMOOTH:                                     //THIS DOES NOT WORK WELL!!!
                 //tarVel = moveProps.tSpeed * Mathf.Clamp(1.0f - d / dFar, 0.3f, 1.0f);
