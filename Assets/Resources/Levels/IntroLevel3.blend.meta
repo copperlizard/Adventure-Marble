@@ -20,6 +20,36 @@ ModelImporter:
     100024: Tunnel
     100026: PlatformJ
     100028: PlatformK
+    100030: ElevatorA
+    100032: ElevatorB
+    100034: ElevatorC
+    100036: ElevatorD
+    100038: Post
+    100040: SurfCurve
+    100042: Spinner
+    100044: Step
+    100046: Step_001
+    100048: Step_002
+    100050: Step_003
+    100052: Step_004
+    100054: Step_005
+    100056: Step_006
+    100058: Step_007
+    100060: Step_008
+    100062: Step_009
+    100064: Step_010
+    100066: StepA
+    100068: StepB
+    100070: StepC
+    100072: StepD
+    100074: StepE
+    100076: StepF
+    100078: StepG
+    100080: StepH
+    100082: StepI
+    100084: StepJ
+    100086: StepK
+    100088: StepL
     400000: Circle
     400002: Cylinder
     400004: //RootNode
@@ -35,6 +65,36 @@ ModelImporter:
     400024: Tunnel
     400026: PlatformJ
     400028: PlatformK
+    400030: ElevatorA
+    400032: ElevatorB
+    400034: ElevatorC
+    400036: ElevatorD
+    400038: Post
+    400040: SurfCurve
+    400042: Spinner
+    400044: Step
+    400046: Step_001
+    400048: Step_002
+    400050: Step_003
+    400052: Step_004
+    400054: Step_005
+    400056: Step_006
+    400058: Step_007
+    400060: Step_008
+    400062: Step_009
+    400064: Step_010
+    400066: StepA
+    400068: StepB
+    400070: StepC
+    400072: StepD
+    400074: StepE
+    400076: StepF
+    400078: StepG
+    400080: StepH
+    400082: StepI
+    400084: StepJ
+    400086: StepK
+    400088: StepL
     2300000: Circle
     2300002: Cylinder
     2300004: PlatformA
@@ -49,6 +109,36 @@ ModelImporter:
     2300022: Tunnel
     2300024: PlatformJ
     2300026: PlatformK
+    2300028: ElevatorA
+    2300030: ElevatorB
+    2300032: ElevatorC
+    2300034: ElevatorD
+    2300036: Post
+    2300038: SurfCurve
+    2300040: Spinner
+    2300042: Step
+    2300044: Step_001
+    2300046: Step_002
+    2300048: Step_003
+    2300050: Step_004
+    2300052: Step_005
+    2300054: Step_006
+    2300056: Step_007
+    2300058: Step_008
+    2300060: Step_009
+    2300062: Step_010
+    2300064: StepA
+    2300066: StepB
+    2300068: StepC
+    2300070: StepD
+    2300072: StepE
+    2300074: StepF
+    2300076: StepG
+    2300078: StepH
+    2300080: StepI
+    2300082: StepJ
+    2300084: StepK
+    2300086: StepL
     3300000: Circle
     3300002: Cylinder
     3300004: PlatformA
@@ -63,6 +153,36 @@ ModelImporter:
     3300022: Tunnel
     3300024: PlatformJ
     3300026: PlatformK
+    3300028: ElevatorA
+    3300030: ElevatorB
+    3300032: ElevatorC
+    3300034: ElevatorD
+    3300036: Post
+    3300038: SurfCurve
+    3300040: Spinner
+    3300042: Step
+    3300044: Step_001
+    3300046: Step_002
+    3300048: Step_003
+    3300050: Step_004
+    3300052: Step_005
+    3300054: Step_006
+    3300056: Step_007
+    3300058: Step_008
+    3300060: Step_009
+    3300062: Step_010
+    3300064: StepA
+    3300066: StepB
+    3300068: StepC
+    3300070: StepD
+    3300072: StepE
+    3300074: StepF
+    3300076: StepG
+    3300078: StepH
+    3300080: StepI
+    3300082: StepJ
+    3300084: StepK
+    3300086: StepL
     4300000: PlatformI
     4300002: PlatformH
     4300004: PlatformG
@@ -77,6 +197,36 @@ ModelImporter:
     4300022: Circle
     4300024: PlatformK
     4300026: PlatformJ
+    4300028: SurfCurve
+    4300030: ElevatorD
+    4300032: ElevatorC
+    4300034: ElevatorB
+    4300036: Post
+    4300038: ElevatorA
+    4300040: Step_010
+    4300042: Step_009
+    4300044: Step_008
+    4300046: Step_007
+    4300048: Step_006
+    4300050: Step_005
+    4300052: Step_004
+    4300054: Step_003
+    4300056: Step_002
+    4300058: Step_001
+    4300060: Step
+    4300062: Spinner
+    4300064: StepK
+    4300066: StepJ
+    4300068: StepI
+    4300070: StepH
+    4300072: StepG
+    4300074: StepF
+    4300076: StepE
+    4300078: StepD
+    4300080: StepC
+    4300082: StepB
+    4300084: StepA
+    4300086: StepL
     7400000: Default Take
     9500000: //RootNode
   materials:

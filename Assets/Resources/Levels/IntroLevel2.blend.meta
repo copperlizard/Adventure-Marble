@@ -16,6 +16,10 @@ ModelImporter:
     100016: RampA
     100018: RampB
     100020: Sphere
+    100022: SurfCurve
+    100024: DownHill
+    100026: SurfSphere
+    100028: Cup
     400000: //RootNode
     400002: MovingPlatformA
     400004: MovingPlatformB
@@ -27,6 +31,10 @@ ModelImporter:
     400016: RampA
     400018: RampB
     400020: Sphere
+    400022: SurfCurve
+    400024: DownHill
+    400026: SurfSphere
+    400028: Cup
     2300000: MovingPlatformA
     2300002: MovingPlatformB
     2300004: MovingPlatformC
@@ -37,6 +45,10 @@ ModelImporter:
     2300014: RampA
     2300016: RampB
     2300018: Sphere
+    2300020: SurfCurve
+    2300022: DownHill
+    2300024: SurfSphere
+    2300026: Cup
     3300000: MovingPlatformA
     3300002: MovingPlatformB
     3300004: MovingPlatformC
@@ -47,6 +59,10 @@ ModelImporter:
     3300014: RampA
     3300016: RampB
     3300018: Sphere
+    3300020: SurfCurve
+    3300022: DownHill
+    3300024: SurfSphere
+    3300026: Cup
     4300000: Sphere
     4300002: RampB
     4300004: RampA
@@ -57,6 +73,10 @@ ModelImporter:
     4300014: PlatformB
     4300016: MovingPlatformA
     4300018: PlatformA
+    4300020: SurfCurve
+    4300022: DownHill
+    4300024: SurfSphere
+    4300026: Cup
     7400000: Default Take
     9500000: //RootNode
   materials:
