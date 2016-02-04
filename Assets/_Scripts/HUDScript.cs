@@ -83,7 +83,7 @@ public class HUDScript : MonoBehaviour
                 {
                     colMod = "<color=#FFFFFF>";
                 }
-                scoreboard += colMod + "\n#" + i.ToString() + ": " + DataManager.saves[thisLevel].names[i] + " - " + DataManager.saves[thisLevel].times[i].ToString() + ((colMod != "") ? "</color>":"");
+                scoreboard += colMod + "\n#" + (i + 1).ToString() + ": " + DataManager.saves[thisLevel].names[i] + " - " + DataManager.saves[thisLevel].times[i].ToString() + ((colMod != "") ? "</color>":"");
             }
 
             HUD.centerText.text = scoreboard;
@@ -127,7 +127,7 @@ public class HUDScript : MonoBehaviour
     {
         HUD.speedometer.text = rb.GetRelativePointVelocity(Vector3.zero).magnitude.ToString();
         HUD.powerText.text = "Power:" + player.GetComponent<PlayerControl>().powerUp;
-        HUD.FPcounter.text = "Pushes:" + player.GetComponent<PlayerControl>().phys.fPushes.ToString();
+        HUD.FPcounter.text = "Pushes:" + player.GetComponent<PlayerControl>().powps.fPushes.ToString();
 
         deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
         float fps = 1.0f / deltaTime;

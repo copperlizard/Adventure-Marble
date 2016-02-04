@@ -10,29 +10,37 @@ public class PlayerControl : MonoBehaviour
     [HideInInspector]
     public string powerUp;
     [HideInInspector]    
-    public int PUcount;    
+    public int PUcount;
 
     [System.Serializable]
     public class MarblePhys
     {
-        public float power, hopPower, airPower, rPfactor, rPslide, rVfactor, epsilon, superJumpPower, gravMarbleDur, gravMarbleGrav, fPush, fPushCDTime, fPushRCTime;
-        public int fPushes;
+        public float power, hopPower, airPower, rPfactor, rPslide, rVfactor, epsilon;        
     }
+
+    [System.Serializable]
+    public class PowerProps
+    {
+        public int fPushes;
+        public float fPush, fPushCDTime, fPushRCTime, superJumpPower, gravMarbleDur, gravMarbleGrav, recallDur;
+    }
+
     public MarblePhys phys = new MarblePhys();
+    public PowerProps powps = new PowerProps();
 
     public AudioSource moveSounds, SFXSounds;
 
     [System.Serializable]
     public class audioClips
     {
-        public AudioClip pickupSound, rolling1, collision1, jump1, superJumpcol1, superJump1, gravMarbleCol1, gravMarble1, fPush1, noPow1, noPush1;
+        public AudioClip pickupSound, rolling1, collision1, jump1, superJumpcol1, superJump1, gravMarbleCol1, gravMarble1, recallCol1, recallTimer1, recallWarp1, fPush1, noPow1, noPush1;
     }
     public audioClips sounds = new audioClips();
 
     private Rigidbody rb;
     private Vector3 push, groundAt;    
     private float x, z, volume, pitch;    
-    private bool a, lBump, rBump, grounded, maybeAir, gravMarbleActive, fPushLock;
+    private bool a, lBump, rBump, grounded, maybeAir, gravMarbleActive, recallActive, fPushLock;
 
     // Use this for initialization
     void Start()
@@ -48,6 +56,7 @@ public class PlayerControl : MonoBehaviour
 
         grounded = true;
         gravMarbleActive = false;
+        recallActive = false;
         fPushLock = false;        
 
         powerUp = "none";        
@@ -99,6 +108,10 @@ public class PlayerControl : MonoBehaviour
         {
             SFXSounds.PlayOneShot(sounds.gravMarbleCol1);
         }
+        else if(powerUp == "Recall")
+        {
+            SFXSounds.PlayOneShot(sounds.recallCol1);
+        }
     }
 
     IEnumerator resetDelay()
@@ -116,10 +129,10 @@ public class PlayerControl : MonoBehaviour
 
     IEnumerator fPushCoolDowns()
     {
-        yield return new WaitForSeconds(phys.fPushCDTime);
+        yield return new WaitForSeconds(powps.fPushCDTime);
         fPushLock = false;        
-        yield return new WaitForSeconds(phys.fPushRCTime);
-        phys.fPushes++;        
+        yield return new WaitForSeconds(powps.fPushRCTime);
+        powps.fPushes++;        
     }
 
     IEnumerator gravityMarble()
@@ -130,15 +143,47 @@ public class PlayerControl : MonoBehaviour
         SFXSounds.loop = true;
         SFXSounds.Play();
         float startTime = Time.time;
-        while(Time.time < startTime + phys.gravMarbleDur)
+        while(Time.time < startTime + powps.gravMarbleDur)
         {
-            rb.AddForce(groundAt * phys.gravMarbleGrav);            
+            rb.AddForce(groundAt * powps.gravMarbleGrav);            
             yield return null;
         }
         rb.useGravity = true;
         gravMarbleActive = false;
         SFXSounds.loop = false;
         SFXSounds.Stop();        
+    }
+
+    IEnumerator recall()
+    {
+        recallActive = true;
+        float startTime = Time.time;
+
+        Vector3 recallPos = transform.position;
+        Quaternion recallRot = transform.rotation;
+
+        Vector3 camStats = cam.GetComponent<CamControl>().camStats();       
+
+        SFXSounds.clip = sounds.recallTimer1;
+        SFXSounds.loop = true;
+        SFXSounds.Play();
+
+        while (startTime + powps.recallDur >= Time.time)
+        {
+            yield return null;
+        }
+
+        SFXSounds.loop = false;
+        SFXSounds.Stop();
+
+        SFXSounds.PlayOneShot(sounds.recallWarp1);
+
+        transform.position = recallPos;
+        transform.rotation = recallRot;
+        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        cam.GetComponent<CamControl>().setCam(camStats);
+        recallActive = false;        
     }
 
     // Update is called once per frame
@@ -197,7 +242,7 @@ public class PlayerControl : MonoBehaviour
         {
             if(!fPushLock && (push.magnitude != 0.0f))
             {                
-                if (phys.fPushes > 0)
+                if (powps.fPushes > 0)
                 {
                     rBump = false;               
                     if(gravMarbleActive)
@@ -205,9 +250,9 @@ public class PlayerControl : MonoBehaviour
                         push = Quaternion.Euler(-Vector3.Angle(Vector3.down, groundAt), 0.0f, Vector3.Angle(Vector3.down, groundAt)) * push;                   
                     }
 
-                    rb.AddForce(Quaternion.Euler(0.0f, cam.transform.rotation.eulerAngles.y, 0.0f) * (push * phys.fPush));
+                    rb.AddForce(Quaternion.Euler(0.0f, cam.transform.rotation.eulerAngles.y, 0.0f) * (push * powps.fPush));
                     SFXSounds.PlayOneShot(sounds.fPush1);
-                    phys.fPushes--;
+                    powps.fPushes--;
                     fPushLock = true;
                     StartCoroutine(fPushCoolDowns());
                 }
@@ -232,7 +277,7 @@ public class PlayerControl : MonoBehaviour
             }
             else if (powerUp == "SuperJump")
             {
-                rb.AddForce(-groundAt * phys.superJumpPower);
+                rb.AddForce(-groundAt * powps.superJumpPower);
                 SFXSounds.PlayOneShot(sounds.superJump1);
                 powerUp = "none";
             }
@@ -240,6 +285,18 @@ public class PlayerControl : MonoBehaviour
             {
                 StartCoroutine(gravityMarble());
                 powerUp = "none";
+            }
+            else if (powerUp == "Recall")
+            {
+                if(!recallActive)
+                {
+                    StartCoroutine(recall());
+                    powerUp = "none";
+                }
+                else
+                {
+                    SFXSounds.PlayOneShot(sounds.noPush1);
+                }                
             }
         }
 

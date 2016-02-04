@@ -30,7 +30,7 @@ public class CamControl : MonoBehaviour {
         paused = false;         
     }
 
-    public void pause( bool state )
+    public void pause(bool state)
     {
         paused = state;
     }
@@ -57,6 +57,18 @@ public class CamControl : MonoBehaviour {
 
             v = clampAngle(v, ymin, ymax);
         }        
+    }
+
+    public Vector3 camStats()
+    {
+        return new Vector3(h, v, dist);
+    }
+
+    public void setCam(Vector3 stats)
+    {
+        h = stats.x;
+        v = stats.y;
+        dist = stats.z;
     }
 
 	// Update is called once per frame
