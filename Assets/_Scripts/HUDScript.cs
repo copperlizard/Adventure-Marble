@@ -24,7 +24,7 @@ public class HUDScript : MonoBehaviour
 
     IEnumerator EndDelay(int lvlToload, bool win = false)
     {
-        int iat = 0;
+        int iat = -1;
         if(win)
         {
             HUD.centerText.text = "You Win!";

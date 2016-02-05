@@ -86,9 +86,7 @@ public class ButtonBrancher : MonoBehaviour
 
 	// Use this for initialization
 	void Start ()
-    {
-        //Debug.Log("ButtonBrancherStart()");
-
+    {        
         buttons = new List<GameObject>();
 
         lastScreenWidth = Screen.width;

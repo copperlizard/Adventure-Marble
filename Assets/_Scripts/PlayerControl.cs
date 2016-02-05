@@ -15,7 +15,7 @@ public class PlayerControl : MonoBehaviour
     [System.Serializable]
     public class MarblePhys
     {
-        public float power, hopPower, airPower, rPfactor, rPslide, rVfactor, epsilon;        
+        public float power, hopPower, airPower, rPfactor, rPslide, rVfactor, radius, epsilon;        
     }
 
     [System.Serializable]
@@ -51,6 +51,8 @@ public class PlayerControl : MonoBehaviour
         //Get player's rigid body
         rb = GetComponent<Rigidbody>();
         rb.maxAngularVelocity = 40;
+
+        rb.collisionDetectionMode = CollisionDetectionMode.Continuous; //Maybe make this optional for old computers?!?!
 
         PUcount = 0;        
 
@@ -216,7 +218,7 @@ public class PlayerControl : MonoBehaviour
         if(maybeAir)
         {
             //Check if touching somewhere else...
-            if(!Physics.CheckSphere(transform.position, (transform.localScale.x / 2.0f) + phys.epsilon, LayerMask.GetMask("Default"), QueryTriggerInteraction.Ignore)) //assuming a spherical marble
+            if(!Physics.CheckSphere(transform.position, phys.radius + phys.epsilon, LayerMask.GetMask("Default"), QueryTriggerInteraction.Ignore)) //assuming a spherical marble
             {
                 //Left the ground
                 grounded = false;
@@ -348,8 +350,8 @@ public class PlayerControl : MonoBehaviour
         if(!grounded)
         {
             //Debug.Log("GROUND COLLISION STAY!");
-            moveSounds.volume = Mathf.Clamp(moveSounds.volume, 0.5f, 0.7f);
-            moveSounds.pitch = Mathf.Clamp(moveSounds.pitch, 0.5f, 1.0f);
+            moveSounds.volume = Mathf.Clamp(moveSounds.volume, 0.7f, 1.0f);
+            moveSounds.pitch = Mathf.Clamp(moveSounds.pitch, 0.7f, 1.0f);
             moveSounds.PlayOneShot(sounds.collision1);
         }        
 

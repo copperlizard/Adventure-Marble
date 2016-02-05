@@ -53,9 +53,9 @@ public class MenuJoypadControls : MonoBehaviour
         //ADD B BUTTON? (CLOSE BRANCHER?)
 
         if ((h != 0.0f || v != 0.0f || a == true) && !joypadding)
-        {
+        {            
             joypadding = true;            
-            but = gameObject.GetComponentInChildren<Selectable>();
+            but = gameObject.GetComponentInChildren<Selectable>();            
             but.Select();
         }
     }

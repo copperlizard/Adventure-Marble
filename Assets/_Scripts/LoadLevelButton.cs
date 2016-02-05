@@ -20,7 +20,9 @@ public class LoadLevelButton : MonoBehaviour {
 
     public void loadlevel()
     {
+        Time.timeScale = 1.0f;        
         Cursor.visible = true;
+        AudioListener.pause = false;
         SceneManager.LoadScene(levelNum);                
     }
 }
