@@ -36,7 +36,8 @@ public static class DataManager
     }
     
     public static void resetSave()
-    {        
+    {
+        PlayerPrefs.DeleteAll();
         saves.Clear(); //ensure fresh list
         for (int i = 0; i < numLvls; i++)
         {

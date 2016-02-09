@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerControl : MonoBehaviour
 {    
@@ -37,7 +38,10 @@ public class PlayerControl : MonoBehaviour
     }
     public audioClips sounds = new audioClips();
 
+    public List<Material> marbleMats = new List<Material>();
+
     private Rigidbody rb;
+    private Renderer rend;
     private Vector3 push, groundAt;    
     private float x, z, volume, pitch;    
     private bool a, lBump, rBump, grounded, maybeAir, gravMarbleActive, recallActive, fPushLock;
@@ -51,16 +55,27 @@ public class PlayerControl : MonoBehaviour
         //Get player's rigid body
         rb = GetComponent<Rigidbody>();
         rb.maxAngularVelocity = 40;
-
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous; //Maybe make this optional for old computers?!?!
 
-        PUcount = 0;        
 
+        //MOVE LATER!!!
+        PlayerPrefs.SetInt("MarbleMat", 2);
+
+        //Assign material if not default
+        int matToUse = PlayerPrefs.GetInt("MarbleMat", -1);
+        if ( matToUse != -1 || matToUse != 0)
+        {
+            matToUse = Mathf.Clamp(matToUse, 0, marbleMats.Count - 1); //Ensure in list range
+            rend = gameObject.GetComponent<Renderer>();
+            rend.material = marbleMats[matToUse];
+        }        
+
+        //Set up start vars
+        PUcount = 0;
         grounded = true;
         gravMarbleActive = false;
         recallActive = false;
-        fPushLock = false;        
-
+        fPushLock = false;
         powerUp = "none";        
     }
 
