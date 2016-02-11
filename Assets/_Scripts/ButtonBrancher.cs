@@ -140,6 +140,7 @@ public class ButtonBrancher : MonoBehaviour
 
     public void toggle()
     {
+        //Debug.Log(gameObject.name.ToString() + " TOGGLE!");
         animSets.opening = !animSets.opening;
     }
 

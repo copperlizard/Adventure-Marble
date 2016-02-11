@@ -18,9 +18,8 @@ public class SaveFieldInput : MonoBehaviour
 	
 	}
 
-    public void input(string name)
+    public void SaveInput()
     {
-        PlayerPrefs.SetString("PlayerName", inField.text);
-        gameObject.GetComponentInParent<ButtonBrancher>().toggle();
+        PlayerPrefs.SetString("PlayerName", inField.text);        
     }
 }

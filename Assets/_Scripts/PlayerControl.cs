@@ -55,11 +55,7 @@ public class PlayerControl : MonoBehaviour
         //Get player's rigid body
         rb = GetComponent<Rigidbody>();
         rb.maxAngularVelocity = 40;
-        rb.collisionDetectionMode = CollisionDetectionMode.Continuous; //Maybe make this optional for old computers?!?!
-
-
-        //MOVE LATER!!!
-        PlayerPrefs.SetInt("MarbleMat", 2);
+        rb.collisionDetectionMode = CollisionDetectionMode.Continuous; //Maybe make this optional for old computers?!?!        
 
         //Assign material if not default
         int matToUse = PlayerPrefs.GetInt("MarbleMat", -1);
