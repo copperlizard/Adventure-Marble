@@ -15,9 +15,7 @@ public class ResetSaveButton : MonoBehaviour {
 	}
 
     public void reset()
-    {
-        //Later, make this spawn a confirmation prefab, and use the prefab to reset save data
-        DataManager.resetSave();
-        gameObject.GetComponentInChildren<Text>().text = "RESET!";
+    {        
+        DataManager.resetSave();        
     }
 }

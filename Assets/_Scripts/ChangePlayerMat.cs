@@ -3,13 +3,12 @@ using System.Collections;
 
 public class ChangePlayerMat : MonoBehaviour
 {
-    public int numMats;
-    private int curMat;
+    public int numMats;    
 
 	// Use this for initialization
 	void Start ()
     {
-        curMat = PlayerPrefs.GetInt("MarbleMat", -1);	
+        	
 	}
 	
 	// Update is called once per frame
@@ -19,16 +18,12 @@ public class ChangePlayerMat : MonoBehaviour
 	}
 
     public void prevMat()
-    {
-        curMat++;
-        curMat = Mathf.Clamp(curMat, 0, numMats - 1);
-        PlayerPrefs.SetInt("MarbleMat", curMat);
+    {        
+        PlayerPrefs.SetInt("MarbleMat", Mathf.Clamp(PlayerPrefs.GetInt("MarbleMat", -1) - 1, 0, numMats - 1));
     }
 
     public void nextMat()
     {
-        curMat--;
-        curMat = Mathf.Clamp(curMat, 0, numMats - 1);
-        PlayerPrefs.SetInt("MarbleMat", curMat);
+        PlayerPrefs.SetInt("MarbleMat", Mathf.Clamp(PlayerPrefs.GetInt("MarbleMat", -1) + 1, 0, numMats - 1));
     }
 }
