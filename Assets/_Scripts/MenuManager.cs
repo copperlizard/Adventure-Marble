@@ -22,9 +22,11 @@ public class MenuManager : MonoBehaviour
         if(curMen != null)
         {
             curMen.isOpen = false;
+            curMen.GetComponent<MenuJoypadControls>().engaged = false;
         }
 
         curMen = menu;
         curMen.isOpen = true;
+        curMen.GetComponent<MenuJoypadControls>().engaged = true;
     }
 }

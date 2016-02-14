@@ -328,7 +328,8 @@ public class PlayerControl : MonoBehaviour
             pitch = Mathf.Lerp(pitch, Random.Range(0.2f, 1.0f), phys.rPslide);
             //volume = rb.velocity.magnitude * phys.rVfactor;
             //Debug.Log(rb.GetRelativePointVelocity(transform.position).magnitude.ToString());
-            volume = (rb.GetRelativePointVelocity(transform.position).magnitude / 50.0f) * phys.rVfactor;            
+            //volume = (rb.GetRelativePointVelocity(transform.position).magnitude / 50.0f) * phys.rVfactor;
+            volume = (rb.angularVelocity.magnitude / 50.0f) * phys.rVfactor;
             moveSounds.pitch = pitch;
             moveSounds.volume = volume;
         }        

@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
+
+public enum MenuStyle { FREE, EXPLICIT };
 
 public class MenuJoypadControls : MonoBehaviour
 {    
     public bool engaged;
+    public MenuStyle style;    
     private Selectable but;
     private float h, v;
     private bool a, aLock, joypadding;
@@ -13,7 +17,7 @@ public class MenuJoypadControls : MonoBehaviour
 	void Start ()
     {        
         joypadding = false;        
-        aLock = false;        
+        aLock = false;                        
 	}
 	
 	// Update is called once per frame
@@ -42,7 +46,7 @@ public class MenuJoypadControls : MonoBehaviour
     void getInput()
     {
         h = Input.GetAxisRaw("Horizontal");
-        v = Input.GetAxisRaw("Vertical");
+        v = Input.GetAxisRaw("Vertical");        
 
         if (Input.GetButtonDown("Jump"))
         {
@@ -55,36 +59,76 @@ public class MenuJoypadControls : MonoBehaviour
         if ((h != 0.0f || v != 0.0f || a == true) && !joypadding)
         {            
             joypadding = true;            
-            but = gameObject.GetComponentInChildren<Selectable>();            
+            but = gameObject.GetComponentInChildren<Selectable>();
             but.Select();
         }
     }
 
     void menuSelection()
     {        
+        switch(style)
+        {
+            case MenuStyle.FREE:
+                menuFreeSelection();
+                break;
+            case MenuStyle.EXPLICIT:
+                menuExplicitSelection();
+                break;
+            default:
+                break;
+        }
+    }
+    
+    void menuFreeSelection()
+    {
         if (v > 0.0f)
-        {                
-            but.FindSelectableOnUp();                
+        {
+            but.FindSelectableOnUp();
         }
         else if (v < 0.0f)
-        {                
-            but.FindSelectableOnDown();                
-        }                       
-           
+        {
+            but.FindSelectableOnDown();
+        }
+
         if (h > 0.0f)
-        {                
-            but.FindSelectableOnRight();                
+        {
+            but.FindSelectableOnRight();
         }
         else if (h < 0.0f)
-        {                
-            but.FindSelectableOnLeft();                
-        }                  
-        
+        {
+            but.FindSelectableOnLeft();
+        }
+
         if (a && !aLock)
-        {                
-            but.Select();                
-            a = false;                
-            //Debug.Log("Select()!");                
+        {
+            but.Select();
+            a = false;      
+        }
+    }
+    
+    void menuExplicitSelection()
+    {
+        if (v > 0.0f)
+        {
+            but = but.navigation.selectOnUp;
+        }
+        else if (v < 0.0f)
+        {
+            but = but.navigation.selectOnDown;
+        }
+
+        if (h > 0.0f)
+        {
+            but = but.navigation.selectOnRight;
+        }
+        else if (h < 0.0f)
+        {
+            but = but.navigation.selectOnLeft;
+        }
+
+        if (a && !aLock)
+        {
+            but.Select();                           
         }
     }    
 }
