@@ -85,6 +85,7 @@
     <Compile Include="Assets\_Scripts\SaveData.cs" />
     <Compile Include="Assets\_Scripts\SaveFieldInput.cs" />
     <Compile Include="Assets\_Scripts\ShowCurMatName.cs" />
+    <Compile Include="Assets\_Scripts\Switch.cs" />
     <Compile Include="Assets\_Scripts\chasePlayer.cs" />
     <Compile Include="Assets\_Scripts\rotator.cs" />
   </ItemGroup>
