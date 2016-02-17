@@ -96,12 +96,14 @@ public class Switch : MonoBehaviour
        if(on && !litted)
         {            
             litted = true;
+            DynamicGI.SetEmissive(rend, col * intensity);
             Debug.Log("LIGHT ON!");
         }
 
        if(!on && litted)
         {   
             litted = false;
+            DynamicGI.SetEmissive(rend, Color.black);
             Debug.Log("LIGHT OFF!");
         }
     }
