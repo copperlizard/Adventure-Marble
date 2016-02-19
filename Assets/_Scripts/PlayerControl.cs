@@ -350,8 +350,8 @@ public class PlayerControl : MonoBehaviour
             Debug.Log("GROUND COLLISION ENTER!!!!!!!!!!!!!!THIS BASICALLY NEVER HAPPENS!!!!!!!!");         
             grounded = true;
             maybeAir = false;
-            moveSounds.volume = Mathf.Clamp(moveSounds.volume, 0.5f, 0.7f);
-            moveSounds.pitch = Mathf.Clamp(moveSounds.pitch, 0.5f, 1.0f);
+            moveSounds.volume = Mathf.Clamp(moveSounds.volume, 0.7f, 1.0f);
+            moveSounds.pitch = Mathf.Clamp(moveSounds.pitch, 0.7f, 1.0f);
             moveSounds.PlayOneShot(sounds.collision1);            
         }
     }

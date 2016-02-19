@@ -67,6 +67,7 @@
     <Compile Include="Assets\_Scripts\CamControl.cs" />
     <Compile Include="Assets\_Scripts\ChangePlayerMat.cs" />
     <Compile Include="Assets\_Scripts\DataManager.cs" />
+    <Compile Include="Assets\_Scripts\DynamicPlatform.cs" />
     <Compile Include="Assets\_Scripts\GreetingMessage.cs" />
     <Compile Include="Assets\_Scripts\HUDScript.cs" />
     <Compile Include="Assets\_Scripts\InputFieldPlaceHolder.cs" />

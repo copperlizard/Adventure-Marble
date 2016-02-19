@@ -1,19 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public enum SwitchMode {  TOGGLE, MOMENTARY, TIMED };
 
 public class Switch : MonoBehaviour
 {
     public SwitchMode mode;
+    public List<GameObject> mutSwitches = new List<GameObject>();
+    public List<GameObject> setSwitches = new List<GameObject>();
+    public List<GameObject> platforms = new List<GameObject>();
     public Color col;
     public float intensity, time;
 
     [HideInInspector]
     public bool on, pressed, timOn;
 
-    private Renderer rend;
-    private bool untouched, litted;
+    private Renderer rend;    
+    private Color startCol;
+    private bool untouched, litted, butSetOn;
 
     IEnumerator timeDelayOff()
     {
@@ -31,13 +36,16 @@ public class Switch : MonoBehaviour
 
         untouched = true;
         litted = false;
+        butSetOn = false;
 
-        rend = GetComponent<Renderer>();
+        rend = GetComponent<Renderer>();        
+        startCol = rend.material.color;
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
+        //Switch logic
         switch(mode)
         {
             case SwitchMode.TOGGLE:
@@ -49,6 +57,43 @@ public class Switch : MonoBehaviour
             case SwitchMode.TIMED:
                 timedSwitch();
                 break;
+        }
+
+        //This switch on
+        if(on)
+        {
+            //Account for mutually exclusive switches
+            if (mutSwitches.Count > 0)
+            {
+                foreach(GameObject swit in mutSwitches)
+                {
+                    swit.GetComponent<Switch>().on = false;
+                }
+            }
+
+            //If switch set
+            if (setSwitches.Count > 0)
+            {
+                butSetOn = true;
+                foreach (GameObject swit in setSwitches)
+                {
+                    if(!swit.GetComponent<Switch>().on)
+                    {
+                        butSetOn = false;
+                    }
+                }
+                if(butSetOn)
+                {
+                    //Do stuff
+                    Debug.Log("Switch Set Active!");
+                }
+            }
+            //Lone switch
+            else
+            {
+                //Do stuff
+                Debug.Log("Switch Active!");
+            }
         }
 
         lit();        
@@ -97,6 +142,7 @@ public class Switch : MonoBehaviour
         {            
             litted = true;
             DynamicGI.SetEmissive(rend, col * intensity);
+            rend.material.color = col;
             Debug.Log("LIGHT ON!");
         }
 
@@ -104,6 +150,7 @@ public class Switch : MonoBehaviour
         {   
             litted = false;
             DynamicGI.SetEmissive(rend, Color.black);
+            rend.material.color = startCol;
             Debug.Log("LIGHT OFF!");
         }
     }
