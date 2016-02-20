@@ -7,18 +7,35 @@ public enum SwitchMode {  TOGGLE, MOMENTARY, TIMED };
 public class Switch : MonoBehaviour
 {
     public SwitchMode mode;
-    public List<GameObject> mutSwitches = new List<GameObject>();
-    public List<GameObject> setSwitches = new List<GameObject>();
-    public List<GameObject> platforms = new List<GameObject>();
+
+    [System.Serializable]
+    public class refObjects
+    {
+        public List<GameObject> mutSwitches = new List<GameObject>();
+        public List<GameObject> setSwitches = new List<GameObject>();
+        public List<GameObject> platforms = new List<GameObject>();
+    }
+    public refObjects refObs = new refObjects();
+
+    public bool setTarPos, setRotAxis, setTSpeed, setRSpeed, setRTar;
+    [System.Serializable]
+    public class PlatformProperties
+    {
+        public Vector3 tarPos, rotAxis;
+        public float tSpeed, rSpeed, rTar;
+    }
+    public PlatformProperties platProps = new PlatformProperties();
+    
     public Color col;
     public float intensity, time;
 
     [HideInInspector]
-    public bool on, pressed, timOn;
+    public bool on, pressed;
 
     private Renderer rend;    
-    private Color startCol;
-    private bool untouched, litted, butSetOn;
+    private Color startCol;    
+
+    private bool untouched, litted, butSetOn, forcedOff;
 
     IEnumerator timeDelayOff()
     {
@@ -31,12 +48,12 @@ public class Switch : MonoBehaviour
     void Start ()
     {
         on = false;
-        pressed = false;
-        timOn = false;        
+        pressed = false;                
 
         untouched = true;
-        litted = false;
+        litted = true;
         butSetOn = false;
+        forcedOff = false;
 
         rend = GetComponent<Renderer>();        
         startCol = rend.material.color;
@@ -57,44 +74,7 @@ public class Switch : MonoBehaviour
             case SwitchMode.TIMED:
                 timedSwitch();
                 break;
-        }
-
-        //This switch on
-        if(on)
-        {
-            //Account for mutually exclusive switches
-            if (mutSwitches.Count > 0)
-            {
-                foreach(GameObject swit in mutSwitches)
-                {
-                    swit.GetComponent<Switch>().on = false;
-                }
-            }
-
-            //If switch set
-            if (setSwitches.Count > 0)
-            {
-                butSetOn = true;
-                foreach (GameObject swit in setSwitches)
-                {
-                    if(!swit.GetComponent<Switch>().on)
-                    {
-                        butSetOn = false;
-                    }
-                }
-                if(butSetOn)
-                {
-                    //Do stuff
-                    Debug.Log("Switch Set Active!");
-                }
-            }
-            //Lone switch
-            else
-            {
-                //Do stuff
-                Debug.Log("Switch Active!");
-            }
-        }
+        }        
 
         lit();        
 	}
@@ -107,7 +87,7 @@ public class Switch : MonoBehaviour
             {
                 on = !on;                
                 untouched = false;
-            }
+            }            
         }
     }
 
@@ -144,15 +124,120 @@ public class Switch : MonoBehaviour
             DynamicGI.SetEmissive(rend, col * intensity);
             rend.material.color = col;
             Debug.Log("LIGHT ON!");
+
+            if (setTarPos) //RECONSIDER THIS!!!!
+            {   
+                foreach (GameObject plat in refObs.platforms)
+                {
+                    plat.GetComponent<DynamicPlatform>().tarPos = platProps.tarPos;
+                }
+            }
+
+            if (setRotAxis)
+            {
+                foreach (GameObject plat in refObs.platforms)
+                {
+                    plat.GetComponent<DynamicPlatform>().rotAxis = platProps.rotAxis;
+                }
+            }
+
+            if (setTSpeed)
+            {
+                foreach (GameObject plat in refObs.platforms)
+                {
+                    plat.GetComponent<DynamicPlatform>().tSpeed = platProps.tSpeed;
+                }
+            }
+
+            if (setRSpeed)
+            {
+                foreach (GameObject plat in refObs.platforms)
+                {
+                    plat.GetComponent<DynamicPlatform>().rSpeed = platProps.rSpeed;
+                }
+            }
+
+            if (setRTar)
+            {
+                foreach (GameObject plat in refObs.platforms)
+                {
+                    plat.GetComponent<DynamicPlatform>().rTar = platProps.rTar;
+                }
+            }
+
+            //Account for mutually exclusive switches
+            if (refObs.mutSwitches.Count > 0)
+            {
+                foreach (GameObject swit in refObs.mutSwitches)
+                {
+                    swit.GetComponent<Switch>().forceOff();
+                }
+            }
+
+            //If switch set
+            if (refObs.setSwitches.Count > 0)
+            {
+                butSetOn = true;
+                foreach (GameObject swit in refObs.setSwitches)
+                {
+                    if (!swit.GetComponent<Switch>().on)
+                    {
+                        butSetOn = false;
+                    }
+                }
+                if (butSetOn)
+                {
+                    //Do stuff
+                    Debug.Log("Switch Set Active!");
+                    foreach (GameObject plat in refObs.platforms)
+                    {
+                        plat.GetComponent<DynamicPlatform>().frozen = false;
+                        Debug.Log(plat.name.ToString() + ".frozen = false");
+                    }
+                }
+            }
+            //Lone switch
+            else
+            {
+                //Do stuff
+                Debug.Log("Switch Active!");
+                foreach (GameObject plat in refObs.platforms)
+                {
+                    plat.GetComponent<DynamicPlatform>().frozen = false;
+                    Debug.Log(plat.name.ToString() + ".frozen = false");
+                }
+            }
         }
 
-       if(!on && litted)
+       if(!on && litted && !forcedOff)
         {   
             litted = false;
             DynamicGI.SetEmissive(rend, Color.black);
             rend.material.color = startCol;
             Debug.Log("LIGHT OFF!");
+            
+            foreach (GameObject plat in refObs.platforms)
+            {
+                plat.GetComponent<DynamicPlatform>().frozen = true;
+                Debug.Log(plat.name.ToString() + ".frozen = true");
+            }
         }
+
+       if(litted && forcedOff)
+        {
+            on = false;
+            forcedOff = false;
+            litted = false;
+            DynamicGI.SetEmissive(rend, Color.black);
+            rend.material.color = startCol;
+            Debug.Log("LIGHT OFF!");
+        }
+    }
+
+    void forceOff()
+    {
+        on = false;
+        forcedOff = true;
     }
 
     void OnCollisionStay(Collision other)
