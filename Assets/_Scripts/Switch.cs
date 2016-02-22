@@ -32,6 +32,7 @@ public class Switch : MonoBehaviour
     [HideInInspector]
     public bool on, pressed;
 
+    private AudioSource switchSound;
     private Renderer rend;    
     private Color startCol;    
 
@@ -41,7 +42,7 @@ public class Switch : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         on = false;
-        DynamicGI.SetEmissive(rend, col * 0.25f);
+        DynamicGI.SetEmissive(rend, Color.black);
     }
 
     // Use this for initialization
@@ -53,10 +54,15 @@ public class Switch : MonoBehaviour
         untouched = true;
         litted = true;
         butSetOn = false;
-        forcedOff = false;
+        forcedOff = false;        
 
         rend = GetComponent<Renderer>();        
+
+        rend.material.EnableKeyword("_EMISSION");
+                    
         startCol = rend.material.color;
+
+        switchSound = GetComponent<AudioSource>();        
     }
 	
 	// Update is called once per frame
@@ -118,12 +124,16 @@ public class Switch : MonoBehaviour
 
     void lit()
     {
-       if(on && !litted)
+       if(on && !litted && !forcedOff)
         {            
             litted = true;
+            
             DynamicGI.SetEmissive(rend, col * intensity);
-            rend.material.color = col;
-            Debug.Log("LIGHT ON!");
+            rend.material.SetColor("_Color", col);
+            rend.material.SetColor("_EmissionColor", col * intensity);
+            //Debug.Log("LIGHT ON!");
+
+            switchSound.Play();
 
             if (setTarPos) //RECONSIDER THIS!!!!
             {   
@@ -188,7 +198,7 @@ public class Switch : MonoBehaviour
                 if (butSetOn)
                 {
                     //Do stuff
-                    Debug.Log("Switch Set Active!");
+                    //Debug.Log("Switch Set Active!");
                     foreach (GameObject plat in refObs.platforms)
                     {
                         plat.GetComponent<DynamicPlatform>().frozen = false;
@@ -200,11 +210,11 @@ public class Switch : MonoBehaviour
             else
             {
                 //Do stuff
-                Debug.Log("Switch Active!");
+                //Debug.Log("Switch Active!");
                 foreach (GameObject plat in refObs.platforms)
                 {
                     plat.GetComponent<DynamicPlatform>().frozen = false;
-                    Debug.Log(plat.name.ToString() + ".frozen = false");
+                    //Debug.Log(plat.name.ToString() + ".frozen = false");
                 }
             }
         }
@@ -212,14 +222,18 @@ public class Switch : MonoBehaviour
        if(!on && litted && !forcedOff)
         {   
             litted = false;
+
             DynamicGI.SetEmissive(rend, Color.black);
-            rend.material.color = startCol;
-            Debug.Log("LIGHT OFF!");
+            rend.material.SetColor("_Color", startCol);
+            rend.material.SetColor("_EmissionColor", Color.black);
+            //Debug.Log("LIGHT OFF!");
+
+            switchSound.Stop();
             
             foreach (GameObject plat in refObs.platforms)
             {
                 plat.GetComponent<DynamicPlatform>().frozen = true;
-                Debug.Log(plat.name.ToString() + ".frozen = true");
+                //Debug.Log(plat.name.ToString() + ".frozen = true");
             }
         }
 
@@ -229,8 +243,11 @@ public class Switch : MonoBehaviour
             forcedOff = false;
             litted = false;
             DynamicGI.SetEmissive(rend, Color.black);
-            rend.material.color = startCol;
-            Debug.Log("LIGHT OFF!");
+            rend.material.SetColor("_Color", startCol);
+            rend.material.SetColor("_EmissionColor", Color.black);
+            //Debug.Log("LIGHT OFF!");
+
+            switchSound.Stop();
         }
     }
 
@@ -245,7 +262,8 @@ public class Switch : MonoBehaviour
         if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             //Debug.Log("PRESSED!");
-            pressed = true;           
+            pressed = true;
+            forcedOff = false;
         }
     }
 
