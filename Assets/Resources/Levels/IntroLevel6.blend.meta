@@ -18,6 +18,10 @@ ModelImporter:
     100020: SwitchedPlatformA
     100022: TrackA
     100024: Cube
+    100026: SwitchedPlatformB
+    100028: SwitchedPlatformC
+    100030: SwitchedPlatformD
+    100032: SwitchedPlatformE
     400000: ElevatorA
     400002: //RootNode
     400004: PlatformA
@@ -31,6 +35,10 @@ ModelImporter:
     400020: SwitchedPlatformA
     400022: TrackA
     400024: Cube
+    400026: SwitchedPlatformB
+    400028: SwitchedPlatformC
+    400030: SwitchedPlatformD
+    400032: SwitchedPlatformE
     2300000: ElevatorA
     2300002: PlatformA
     2300004: PlatformB
@@ -43,6 +51,10 @@ ModelImporter:
     2300018: SwitchedPlatformA
     2300020: TrackA
     2300022: Cube
+    2300024: SwitchedPlatformB
+    2300026: SwitchedPlatformC
+    2300028: SwitchedPlatformD
+    2300030: SwitchedPlatformE
     3300000: ElevatorA
     3300002: PlatformA
     3300004: PlatformB
@@ -55,6 +67,10 @@ ModelImporter:
     3300018: SwitchedPlatformA
     3300020: TrackA
     3300022: Cube
+    3300024: SwitchedPlatformB
+    3300026: SwitchedPlatformC
+    3300028: SwitchedPlatformD
+    3300030: SwitchedPlatformE
     4300000: PlatformH
     4300002: PlatformG
     4300004: PlatformF
@@ -67,6 +83,10 @@ ModelImporter:
     4300018: PlatformA
     4300020: SwitchedPlatformA
     4300022: Cube
+    4300024: SwitchedPlatformC
+    4300026: SwitchedPlatformB
+    4300028: SwitchedPlatformD
+    4300030: SwitchedPlatformE
     7400000: Default Take
     9500000: //RootNode
   materials:
