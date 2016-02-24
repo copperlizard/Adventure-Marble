@@ -201,8 +201,7 @@ public class Switch : MonoBehaviour
                     //Debug.Log("Switch Set Active!");
                     foreach (GameObject plat in refObs.platforms)
                     {
-                        plat.GetComponent<DynamicPlatform>().frozen = false;
-                        Debug.Log(plat.name.ToString() + ".frozen = false");
+                        plat.GetComponent<DynamicPlatform>().frozen = false;                        
                     }
                 }
             }

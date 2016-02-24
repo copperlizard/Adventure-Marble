@@ -22,6 +22,9 @@ ModelImporter:
     100028: SwitchedPlatformC
     100030: SwitchedPlatformD
     100032: SwitchedPlatformE
+    100034: SwitchedPlatformF
+    100036: SwitchedPlatformG
+    100038: SwitchedPlatformH
     400000: ElevatorA
     400002: //RootNode
     400004: PlatformA
@@ -39,6 +42,9 @@ ModelImporter:
     400028: SwitchedPlatformC
     400030: SwitchedPlatformD
     400032: SwitchedPlatformE
+    400034: SwitchedPlatformF
+    400036: SwitchedPlatformG
+    400038: SwitchedPlatformH
     2300000: ElevatorA
     2300002: PlatformA
     2300004: PlatformB
@@ -55,6 +61,9 @@ ModelImporter:
     2300026: SwitchedPlatformC
     2300028: SwitchedPlatformD
     2300030: SwitchedPlatformE
+    2300032: SwitchedPlatformF
+    2300034: SwitchedPlatformG
+    2300036: SwitchedPlatformH
     3300000: ElevatorA
     3300002: PlatformA
     3300004: PlatformB
@@ -71,6 +80,9 @@ ModelImporter:
     3300026: SwitchedPlatformC
     3300028: SwitchedPlatformD
     3300030: SwitchedPlatformE
+    3300032: SwitchedPlatformF
+    3300034: SwitchedPlatformG
+    3300036: SwitchedPlatformH
     4300000: PlatformH
     4300002: PlatformG
     4300004: PlatformF
@@ -87,6 +99,9 @@ ModelImporter:
     4300026: SwitchedPlatformB
     4300028: SwitchedPlatformD
     4300030: SwitchedPlatformE
+    4300032: SwitchedPlatformH
+    4300034: SwitchedPlatformG
+    4300036: SwitchedPlatformF
     7400000: Default Take
     9500000: //RootNode
   materials:

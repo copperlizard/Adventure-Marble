@@ -13,14 +13,16 @@ public class DynamicPlatform : MonoBehaviour
     public bool frozen;
 
     private Rigidbody rb;
-    private float rotAng;
-    private int tDir;
+    private Vector3 pivot;    
+    private float rotAng;    
 
     // Use this for initialization
     void Start ()
     {
         rb = GetComponent<Rigidbody>();
-        tDir = 1;        	
+
+        //pivot = location in world space; pivPos = location in local space
+        pivot = transform.position + transform.rotation * pivPos;                           	
 	}
 	
 	// Update is called once per frame
@@ -32,11 +34,7 @@ public class DynamicPlatform : MonoBehaviour
     void FixedUpdate()
     {
         if(!frozen)
-        {
-            //Debug.Log("not frozen!");
-            //Debug.Log("tSpeed = " + tSpeed.ToString());
-            //Debug.Log("rSpeed = " + rSpeed.ToString());
-            //Debug.Log("rTar = " + rTar.ToString());
+        {          
             translate();
             rotate();
         }        
@@ -48,12 +46,11 @@ public class DynamicPlatform : MonoBehaviour
         float dist = (tarPos - transform.position).magnitude;
         if (dist <= epsilon)
         {
-            Debug.Log("flipping start and endpoints!");
+            //Debug.Log("flipping start and endpoints!");
             Vector3 temp = startPos;
             startPos = tarPos;
             tarPos = temp;
-            dist = (tarPos - transform.position).magnitude;
-            //tDir = -tDir;
+            dist = (tarPos - transform.position).magnitude;            
 
             if(switchBehavior == PlatformSwitchBehavior.ONEWAY)
             {
@@ -63,18 +60,24 @@ public class DynamicPlatform : MonoBehaviour
         }
 
         Vector3 rail = tarPos - startPos;
-        Vector3 trav = rail.normalized * Mathf.Min(tSpeed, dist) * Time.deltaTime * tDir;
-        rb.MovePosition(transform.position + trav);
+        Vector3 trav = rail.normalized * Mathf.Min(tSpeed, dist) * Time.deltaTime;
+        //rb.MovePosition(transform.position + trav); //Moved move to end of rotate...
+
+        //Update pivot
+        pivot += trav;
     }
 
     void rotate()
-    {        
+    {
+        clampAngle(rotAng, rMin, rMax);
+
         switch (rotationBehavior)
         {
             case PlatformRotationBehavior.CONTINUOUS:
-                rotAng += rSpeed * Time.deltaTime;
-                rb.MoveRotation(rb.rotation * Quaternion.Euler(rotAxis * rSpeed * Time.deltaTime));
+                rotAng += rSpeed * Time.deltaTime;                
+                rb.MoveRotation(rb.rotation * Quaternion.Euler(rotAxis * rSpeed * Time.deltaTime));                
                 break;
+
             case PlatformRotationBehavior.OSCILATE:
                 rotAng += rSpeed * Time.deltaTime;
                 rb.MoveRotation(rb.rotation * Quaternion.Euler(rotAxis * rSpeed * Time.deltaTime));
@@ -83,14 +86,17 @@ public class DynamicPlatform : MonoBehaviour
                     rSpeed = -rSpeed;
                 }
                 break;
+
             case PlatformRotationBehavior.ROTATETO:
                 rotAng += Mathf.Min(rSpeed, rTar - rotAng) * Time.deltaTime;
-                rb.MoveRotation(rb.rotation * Quaternion.Euler(rotAxis * Mathf.Min(rSpeed, rTar - rotAng) * Time.deltaTime));                
+                rb.MoveRotation(rb.rotation * Quaternion.Euler(rotAxis * Mathf.Min(rSpeed, rTar - rotAng) * Time.deltaTime));
                 break;
             default:
                 break;                    
         }
-        clampAngle(rotAng, rMin, rMax);
+        
+        Vector3 toPiv = rb.rotation * pivPos;
+        rb.MovePosition(pivot - toPiv);                
     }
 
     float clampAngle(float ang, float min, float max)
