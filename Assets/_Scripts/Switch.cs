@@ -2,11 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public enum SwitchMode {  TOGGLE, MOMENTARY, TIMED };
+public enum SwitchMode { TOGGLE, NOOFF, MOMENTARY, TIMED };
 
 public class Switch : MonoBehaviour
 {
     public SwitchMode mode;
+
+    public bool startOn;
 
     [System.Serializable]
     public class refObjects
@@ -52,7 +54,7 @@ public class Switch : MonoBehaviour
         pressed = false;                
 
         untouched = true;
-        litted = true;
+        litted = false;
         butSetOn = false;
         forcedOff = false;        
 
@@ -62,7 +64,12 @@ public class Switch : MonoBehaviour
                     
         startCol = rend.material.color;
 
-        switchSound = GetComponent<AudioSource>();        
+        switchSound = GetComponent<AudioSource>();
+        
+        if(startOn)
+        {
+            on = true;
+        }        
     }
 	
 	// Update is called once per frame
@@ -73,6 +80,9 @@ public class Switch : MonoBehaviour
         {
             case SwitchMode.TOGGLE:
                 toggleSwitch();
+                break;
+            case SwitchMode.NOOFF:
+                noOffSwitch();
                 break;
             case SwitchMode.MOMENTARY:
                 momemtarySwitch();
@@ -94,6 +104,14 @@ public class Switch : MonoBehaviour
                 on = !on;                
                 untouched = false;
             }            
+        }
+    }
+
+    void noOffSwitch()
+    {
+        if(!on && pressed)
+        {
+            on = true;
         }
     }
 

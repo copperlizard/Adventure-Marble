@@ -1,0 +1,147 @@
+fileFormatVersion: 2
+guid: 9ef3edd5ffaefd441817787a95859645
+timeCreated: 1456418655
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: SwitchedPlatformA
+    100004: SwitchPlatformA
+    100006: SurfCurve
+    100008: Cube
+    100010: Cube_001
+    100012: PlatformA
+    100014: PlatformB
+    100016: PlatformC
+    100018: PlatformD
+    100020: SurfCurveA
+    100022: SurfCurveB
+    100024: SurfCurveC
+    100026: PlatformE
+    100028: PlatformF
+    400000: //RootNode
+    400002: SwitchedPlatformA
+    400004: SwitchPlatformA
+    400006: SurfCurve
+    400008: Cube
+    400010: Cube_001
+    400012: PlatformA
+    400014: PlatformB
+    400016: PlatformC
+    400018: PlatformD
+    400020: SurfCurveA
+    400022: SurfCurveB
+    400024: SurfCurveC
+    400026: PlatformE
+    400028: PlatformF
+    2300000: SwitchedPlatformA
+    2300002: SwitchPlatformA
+    2300004: //RootNode
+    2300006: SurfCurve
+    2300008: Cube
+    2300010: Cube_001
+    2300012: PlatformA
+    2300014: PlatformB
+    2300016: PlatformC
+    2300018: PlatformD
+    2300020: SurfCurveA
+    2300022: SurfCurveB
+    2300024: SurfCurveC
+    2300026: PlatformE
+    2300028: PlatformF
+    3300000: SwitchedPlatformA
+    3300002: SwitchPlatformA
+    3300004: //RootNode
+    3300006: SurfCurve
+    3300008: Cube
+    3300010: Cube_001
+    3300012: PlatformA
+    3300014: PlatformB
+    3300016: PlatformC
+    3300018: PlatformD
+    3300020: SurfCurveA
+    3300022: SurfCurveB
+    3300024: SurfCurveC
+    3300026: PlatformE
+    3300028: PlatformF
+    4300000: SwitchedPlatformA
+    4300002: SwitchPlatformA
+    4300004: SurfCurve
+    4300006: Cube_001
+    4300008: Cube
+    4300010: SurfCurveC
+    4300012: PlatformD
+    4300014: PlatformC
+    4300016: SurfCurveB
+    4300018: PlatformB
+    4300020: PlatformA
+    4300022: SurfCurveA
+    4300024: PlatformF
+    4300026: PlatformE
+    7400000: Default Take
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

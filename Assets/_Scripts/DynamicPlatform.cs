@@ -88,8 +88,12 @@ public class DynamicPlatform : MonoBehaviour
                 break;
 
             case PlatformRotationBehavior.ROTATETO:
-                rotAng += Mathf.Min(rSpeed, rTar - rotAng) * Time.deltaTime;
-                rb.MoveRotation(rb.rotation * Quaternion.Euler(rotAxis * Mathf.Min(rSpeed, rTar - rotAng) * Time.deltaTime));
+                float dif = rTar - rotAng;
+
+                float rotChange = ((dif > 0.0f) ? Mathf.Min(rSpeed, dif) : Mathf.Max(-rSpeed, dif)) * Time.deltaTime;
+                rotAng += rotChange;
+                
+                rb.MoveRotation(rb.rotation * Quaternion.Euler(rotAxis * rotChange));
                 break;
             default:
                 break;                    
