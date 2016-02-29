@@ -1,0 +1,175 @@
+fileFormatVersion: 2
+guid: 2ff4c294712d30c40be969b9a6d88604
+timeCreated: 1456612317
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Cube
+    100002: //RootNode
+    100004: PlatformA
+    100006: SurfCurve
+    100008: FanBladesA
+    100010: FanBladesB
+    100012: FanBladesC
+    100014: FanBladesD
+    100016: FanBladesE
+    100018: FanBladesF
+    100020: GimmePlatform
+    100022: GravityMarblePlatform
+    100024: GravityMarbleSuperJumpCube
+    100026: GravityMarbleSuperJumpPlatform
+    100028: HalfPipe
+    100030: StartPlatform
+    100032: SuperJumpPlatform
+    100034: WallJumpA
+    100036: WallJumpB
+    100038: WallJumpC
+    100040: WallJumpEnd
+    400000: Cube
+    400002: //RootNode
+    400004: PlatformA
+    400006: SurfCurve
+    400008: FanBladesA
+    400010: FanBladesB
+    400012: FanBladesC
+    400014: FanBladesD
+    400016: FanBladesE
+    400018: FanBladesF
+    400020: GimmePlatform
+    400022: GravityMarblePlatform
+    400024: GravityMarbleSuperJumpCube
+    400026: GravityMarbleSuperJumpPlatform
+    400028: HalfPipe
+    400030: StartPlatform
+    400032: SuperJumpPlatform
+    400034: WallJumpA
+    400036: WallJumpB
+    400038: WallJumpC
+    400040: WallJumpEnd
+    2300000: Cube
+    2300002: PlatformA
+    2300004: SurfCurve
+    2300006: FanBladesA
+    2300008: FanBladesB
+    2300010: FanBladesC
+    2300012: FanBladesD
+    2300014: FanBladesE
+    2300016: FanBladesF
+    2300018: GimmePlatform
+    2300020: GravityMarblePlatform
+    2300022: GravityMarbleSuperJumpCube
+    2300024: GravityMarbleSuperJumpPlatform
+    2300026: HalfPipe
+    2300028: StartPlatform
+    2300030: SuperJumpPlatform
+    2300032: WallJumpA
+    2300034: WallJumpB
+    2300036: WallJumpC
+    2300038: WallJumpEnd
+    3300000: Cube
+    3300002: PlatformA
+    3300004: SurfCurve
+    3300006: FanBladesA
+    3300008: FanBladesB
+    3300010: FanBladesC
+    3300012: FanBladesD
+    3300014: FanBladesE
+    3300016: FanBladesF
+    3300018: GimmePlatform
+    3300020: GravityMarblePlatform
+    3300022: GravityMarbleSuperJumpCube
+    3300024: GravityMarbleSuperJumpPlatform
+    3300026: HalfPipe
+    3300028: StartPlatform
+    3300030: SuperJumpPlatform
+    3300032: WallJumpA
+    3300034: WallJumpB
+    3300036: WallJumpC
+    3300038: WallJumpEnd
+    4300000: Cube
+    4300002: SurfCurve
+    4300004: PlatformA
+    4300006: GravityMarbleSuperJumpCube
+    4300008: GravityMarbleSuperJumpPlatform
+    4300010: WallJumpEnd
+    4300012: WallJumpC
+    4300014: WallJumpB
+    4300016: WallJumpA
+    4300018: HalfPipe
+    4300020: GimmePlatform
+    4300022: GravityMarblePlatform
+    4300024: SuperJumpPlatform
+    4300026: FanBladesF
+    4300028: FanBladesE
+    4300030: FanBladesD
+    4300032: FanBladesC
+    4300034: FanBladesB
+    4300036: FanBladesA
+    4300038: StartPlatform
+    7400000: Default Take
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

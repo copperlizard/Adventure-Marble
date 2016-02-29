@@ -151,47 +151,7 @@ public class Switch : MonoBehaviour
             rend.material.SetColor("_EmissionColor", col * intensity);
             //Debug.Log("LIGHT ON!");
 
-            switchSound.Play();
-
-            if (setTarPos) //RECONSIDER THIS!!!!
-            {   
-                foreach (GameObject plat in refObs.platforms)
-                {
-                    plat.GetComponent<DynamicPlatform>().tarPos = platProps.tarPos;
-                }
-            }
-
-            if (setRotAxis)
-            {
-                foreach (GameObject plat in refObs.platforms)
-                {
-                    plat.GetComponent<DynamicPlatform>().rotAxis = platProps.rotAxis;
-                }
-            }
-
-            if (setTSpeed)
-            {
-                foreach (GameObject plat in refObs.platforms)
-                {
-                    plat.GetComponent<DynamicPlatform>().tSpeed = platProps.tSpeed;
-                }
-            }
-
-            if (setRSpeed)
-            {
-                foreach (GameObject plat in refObs.platforms)
-                {
-                    plat.GetComponent<DynamicPlatform>().rSpeed = platProps.rSpeed;
-                }
-            }
-
-            if (setRTar)
-            {
-                foreach (GameObject plat in refObs.platforms)
-                {
-                    plat.GetComponent<DynamicPlatform>().rTar = platProps.rTar;
-                }
-            }
+            switchSound.Play();            
 
             //Account for mutually exclusive switches
             if (refObs.mutSwitches.Count > 0)
@@ -221,6 +181,46 @@ public class Switch : MonoBehaviour
                     {
                         plat.GetComponent<DynamicPlatform>().frozen = false;                        
                     }
+
+                    if (setTarPos) //RECONSIDER THIS!!!!
+                    {
+                        foreach (GameObject plat in refObs.platforms)
+                        {
+                            plat.GetComponent<DynamicPlatform>().tarPos = platProps.tarPos;
+                        }
+                    }
+
+                    if (setRotAxis)
+                    {
+                        foreach (GameObject plat in refObs.platforms)
+                        {
+                            plat.GetComponent<DynamicPlatform>().rotAxis = platProps.rotAxis;
+                        }
+                    }
+
+                    if (setTSpeed)
+                    {
+                        foreach (GameObject plat in refObs.platforms)
+                        {
+                            plat.GetComponent<DynamicPlatform>().tSpeed = platProps.tSpeed;
+                        }
+                    }
+
+                    if (setRSpeed)
+                    {
+                        foreach (GameObject plat in refObs.platforms)
+                        {
+                            plat.GetComponent<DynamicPlatform>().rSpeed = platProps.rSpeed;
+                        }
+                    }
+
+                    if (setRTar)
+                    {
+                        foreach (GameObject plat in refObs.platforms)
+                        {
+                            plat.GetComponent<DynamicPlatform>().rTar = platProps.rTar;
+                        }
+                    }
                 }
             }
             //Lone switch
@@ -232,6 +232,46 @@ public class Switch : MonoBehaviour
                 {
                     plat.GetComponent<DynamicPlatform>().frozen = false;
                     //Debug.Log(plat.name.ToString() + ".frozen = false");
+                }
+
+                if (setTarPos) //RECONSIDER THIS!!!!
+                {
+                    foreach (GameObject plat in refObs.platforms)
+                    {
+                        plat.GetComponent<DynamicPlatform>().tarPos = platProps.tarPos;
+                    }
+                }
+
+                if (setRotAxis)
+                {
+                    foreach (GameObject plat in refObs.platforms)
+                    {
+                        plat.GetComponent<DynamicPlatform>().rotAxis = platProps.rotAxis;
+                    }
+                }
+
+                if (setTSpeed)
+                {
+                    foreach (GameObject plat in refObs.platforms)
+                    {
+                        plat.GetComponent<DynamicPlatform>().tSpeed = platProps.tSpeed;
+                    }
+                }
+
+                if (setRSpeed)
+                {
+                    foreach (GameObject plat in refObs.platforms)
+                    {
+                        plat.GetComponent<DynamicPlatform>().rSpeed = platProps.rSpeed;
+                    }
+                }
+
+                if (setRTar)
+                {
+                    foreach (GameObject plat in refObs.platforms)
+                    {
+                        plat.GetComponent<DynamicPlatform>().rTar = platProps.rTar;
+                    }
                 }
             }
         }
