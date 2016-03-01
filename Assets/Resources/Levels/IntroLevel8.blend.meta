@@ -26,6 +26,7 @@ ModelImporter:
     100036: WallJumpB
     100038: WallJumpC
     100040: WallJumpEnd
+    100042: HalfPipeSpacerPlatform
     400000: Cube
     400002: //RootNode
     400004: PlatformA
@@ -47,6 +48,7 @@ ModelImporter:
     400036: WallJumpB
     400038: WallJumpC
     400040: WallJumpEnd
+    400042: HalfPipeSpacerPlatform
     2300000: Cube
     2300002: PlatformA
     2300004: SurfCurve
@@ -67,6 +69,7 @@ ModelImporter:
     2300034: WallJumpB
     2300036: WallJumpC
     2300038: WallJumpEnd
+    2300040: HalfPipeSpacerPlatform
     3300000: Cube
     3300002: PlatformA
     3300004: SurfCurve
@@ -87,6 +90,7 @@ ModelImporter:
     3300034: WallJumpB
     3300036: WallJumpC
     3300038: WallJumpEnd
+    3300040: HalfPipeSpacerPlatform
     4300000: Cube
     4300002: SurfCurve
     4300004: PlatformA
@@ -107,6 +111,7 @@ ModelImporter:
     4300034: FanBladesB
     4300036: FanBladesA
     4300038: StartPlatform
+    4300040: HalfPipeSpacerPlatform
     7400000: Default Take
     9500000: //RootNode
   materials:

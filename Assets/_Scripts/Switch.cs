@@ -38,13 +38,20 @@ public class Switch : MonoBehaviour
     private Renderer rend;    
     private Color startCol;    
 
-    private bool untouched, litted, butSetOn, forcedOff;
+    private bool untouched, litted, butSetOn, forcedOff, delayChange;
 
     IEnumerator timeDelayOff()
     {
         yield return new WaitForSeconds(time);
         on = false;
         DynamicGI.SetEmissive(rend, Color.black);
+    }
+
+    IEnumerator noChange()
+    {
+        delayChange = true;
+        yield return new WaitForSeconds(0.5f);
+        delayChange = false;        
     }
 
     // Use this for initialization
@@ -56,7 +63,8 @@ public class Switch : MonoBehaviour
         untouched = true;
         litted = false;
         butSetOn = false;
-        forcedOff = false;        
+        forcedOff = false;
+        delayChange = false;        
 
         rend = GetComponent<Renderer>();        
 
@@ -75,24 +83,27 @@ public class Switch : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        //Switch logic
-        switch(mode)
+        if(!delayChange)
         {
-            case SwitchMode.TOGGLE:
-                toggleSwitch();
-                break;
-            case SwitchMode.NOOFF:
-                noOffSwitch();
-                break;
-            case SwitchMode.MOMENTARY:
-                momemtarySwitch();
-                break;
-            case SwitchMode.TIMED:
-                timedSwitch();
-                break;
-        }        
+            //Switch logic
+            switch (mode)
+            {
+                case SwitchMode.TOGGLE:
+                    toggleSwitch();
+                    break;
+                case SwitchMode.NOOFF:
+                    noOffSwitch();
+                    break;
+                case SwitchMode.MOMENTARY:
+                    momemtarySwitch();
+                    break;
+                case SwitchMode.TIMED:
+                    timedSwitch();
+                    break;
+            }
 
-        lit();        
+            lit();
+        }                
 	}
 
     void toggleSwitch()
@@ -274,6 +285,9 @@ public class Switch : MonoBehaviour
                     }
                 }
             }
+
+            //Debounce
+            StartCoroutine(noChange());
         }
 
        if(!on && litted && !forcedOff)
@@ -292,6 +306,9 @@ public class Switch : MonoBehaviour
                 plat.GetComponent<DynamicPlatform>().frozen = true;
                 //Debug.Log(plat.name.ToString() + ".frozen = true");
             }
+
+            //Debounce
+            StartCoroutine(noChange());
         }
 
        if(litted && forcedOff)
