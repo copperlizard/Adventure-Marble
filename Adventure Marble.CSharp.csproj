@@ -62,6 +62,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\NotificationWindow.cs" />
     <Compile Include="Assets\_Scripts\BestTimesText.cs" />
     <Compile Include="Assets\_Scripts\ButtonBrancher.cs" />
     <Compile Include="Assets\_Scripts\CamControl.cs" />
