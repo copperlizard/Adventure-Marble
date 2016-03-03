@@ -1,0 +1,205 @@
+fileFormatVersion: 2
+guid: e2f177380b7278843842d9c0ce76d24d
+timeCreated: 1456952270
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Cube
+    100002: Cube_001
+    100004: Cube_002
+    100006: Cube_003
+    100008: Cube_004
+    100010: Cube_005
+    100012: Cube_006
+    100014: Cylinder
+    100016: //RootNode
+    100018: Surface
+    100020: Surface_001
+    100022: Surface_002
+    100024: Surface_003
+    100026: SurfTorus
+    100028: CurvedWall
+    100030: DonutRamp
+    100032: HalfPipeA
+    100034: HalfPipeB
+    100036: HalfPipeC
+    100038: SpinningPlatform
+    100040: StartingPlatform
+    100042: SuperJumpPlatform
+    100044: WallClimbPlatformA
+    100046: WallClimbPlatformB
+    100048: WallJumpPlatformA
+    100050: WallJumpPlatformB
+    100052: WallJumpPlatformC
+    400000: Cube
+    400002: Cube_001
+    400004: Cube_002
+    400006: Cube_003
+    400008: Cube_004
+    400010: Cube_005
+    400012: Cube_006
+    400014: Cylinder
+    400016: //RootNode
+    400018: Surface
+    400020: Surface_001
+    400022: Surface_002
+    400024: Surface_003
+    400026: SurfTorus
+    400028: CurvedWall
+    400030: DonutRamp
+    400032: HalfPipeA
+    400034: HalfPipeB
+    400036: HalfPipeC
+    400038: SpinningPlatform
+    400040: StartingPlatform
+    400042: SuperJumpPlatform
+    400044: WallClimbPlatformA
+    400046: WallClimbPlatformB
+    400048: WallJumpPlatformA
+    400050: WallJumpPlatformB
+    400052: WallJumpPlatformC
+    2300000: Cube
+    2300002: Cube_001
+    2300004: Cube_002
+    2300006: Cube_003
+    2300008: Cube_004
+    2300010: Cube_005
+    2300012: Cube_006
+    2300014: Cylinder
+    2300016: Surface
+    2300018: Surface_001
+    2300020: Surface_002
+    2300022: Surface_003
+    2300024: SurfTorus
+    2300026: CurvedWall
+    2300028: DonutRamp
+    2300030: HalfPipeA
+    2300032: HalfPipeB
+    2300034: HalfPipeC
+    2300036: SpinningPlatform
+    2300038: StartingPlatform
+    2300040: SuperJumpPlatform
+    2300042: WallClimbPlatformA
+    2300044: WallClimbPlatformB
+    2300046: WallJumpPlatformA
+    2300048: WallJumpPlatformB
+    2300050: WallJumpPlatformC
+    3300000: Cube
+    3300002: Cube_001
+    3300004: Cube_002
+    3300006: Cube_003
+    3300008: Cube_004
+    3300010: Cube_005
+    3300012: Cube_006
+    3300014: Cylinder
+    3300016: Surface
+    3300018: Surface_001
+    3300020: Surface_002
+    3300022: Surface_003
+    3300024: SurfTorus
+    3300026: CurvedWall
+    3300028: DonutRamp
+    3300030: HalfPipeA
+    3300032: HalfPipeB
+    3300034: HalfPipeC
+    3300036: SpinningPlatform
+    3300038: StartingPlatform
+    3300040: SuperJumpPlatform
+    3300042: WallClimbPlatformA
+    3300044: WallClimbPlatformB
+    3300046: WallJumpPlatformA
+    3300048: WallJumpPlatformB
+    3300050: WallJumpPlatformC
+    4300000: Cube_006
+    4300002: SurfTorus
+    4300004: Cube_005
+    4300006: Cube_004
+    4300008: Cube_003
+    4300010: Cylinder
+    4300012: Cube_002
+    4300014: Surface_003
+    4300016: Cube_001
+    4300018: Surface_002
+    4300020: Surface_001
+    4300022: Cube
+    4300024: Surface
+    4300026: WallJumpPlatformC
+    4300028: DonutRamp
+    4300030: WallJumpPlatformB
+    4300032: WallJumpPlatformA
+    4300034: SuperJumpPlatform
+    4300036: SpinningPlatform
+    4300038: WallClimbPlatformB
+    4300040: CurvedWall
+    4300042: WallClimbPlatformA
+    4300044: HalfPipeC
+    4300046: HalfPipeB
+    4300048: StartingPlatform
+    4300050: HalfPipeA
+    7400000: Default Take
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

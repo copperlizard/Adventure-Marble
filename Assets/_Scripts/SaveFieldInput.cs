@@ -25,7 +25,7 @@ public class SaveFieldInput : MonoBehaviour
     void Start ()
     {
         inField = gameObject.GetComponent<InputField>();
-        StartCoroutine(checkDelay());	
+        //StartCoroutine(checkDelay());	
 	}
 	
 	// Update is called once per frame

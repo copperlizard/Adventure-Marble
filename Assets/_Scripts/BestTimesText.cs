@@ -35,7 +35,7 @@ public class BestTimesText : MonoBehaviour
 
             for(int i = 0; i < 10; i++)
             {
-                scoreboard += "\n#" + (i + 1).ToString() + ": " + DataManager.saves[curLvl + 1].names[i] + " - " + DataManager.saves[curLvl + 1].times[i].ToString();
+                scoreboard += "\n#" + (i + 1).ToString() + ": " + DataManager.saves[curLvl].names[i] + " - " + DataManager.saves[curLvl].times[i].ToString();
             }
 
             messageText.text = scoreboard;

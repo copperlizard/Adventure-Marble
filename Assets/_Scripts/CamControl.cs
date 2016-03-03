@@ -9,7 +9,7 @@ public class CamControl : MonoBehaviour {
     private Quaternion rotation;
     private Vector3 viewLine;
     private RaycastHit interAt;
-    private float h, v, dist;
+    private float h, v, dist, invLookX, invLookY;
     private bool paused;
 
     // Use this for initialization
@@ -27,7 +27,26 @@ public class CamControl : MonoBehaviour {
 
         rotation = Quaternion.Euler(v, h, 0.0f);
 
-        paused = false;         
+        paused = false;
+
+        //Check for look control inversion
+        if (PlayerPrefs.GetInt("invertLookX", 1) == -1)
+        {
+            invLookX = -1.0f;
+        }
+        else
+        {
+            invLookX = 1.0f;
+        }
+
+        if (PlayerPrefs.GetInt("invertLookY", 1) == -1)
+        {
+            invLookY = -1.0f;
+        }
+        else
+        {
+            invLookY = 1.0f;
+        }
     }
 
     public void pause(bool state)
@@ -52,8 +71,8 @@ public class CamControl : MonoBehaviour {
     {
         if(!paused)
         {
-            h -= Input.GetAxis("rHorizontal") * xspeed * 0.02f;
-            v += Input.GetAxis("rVertical") * yspeed * 0.02f;
+            h -= Input.GetAxis("rHorizontal") * xspeed * 0.02f * invLookX;
+            v += Input.GetAxis("rVertical") * yspeed * 0.02f * invLookY;
 
             v = clampAngle(v, ymin, ymax);
         }        

@@ -72,7 +72,7 @@ public class PlayerControl : MonoBehaviour
         gravMarbleActive = false;
         recallActive = false;
         fPushLock = false;
-        powerUp = "none";        
+        powerUp = "none";
     }
 
     void getInput()

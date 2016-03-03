@@ -112,6 +112,8 @@ public class HUDScript : MonoBehaviour
         HUD.FPcounter.text = "";
         HUD.powerText.text = "";
 
+        thisLevel -= 1; //account for zero index
+
         gameOver = false;
 
         rb = player.GetComponent<Rigidbody>();
