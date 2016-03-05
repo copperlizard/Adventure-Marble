@@ -294,7 +294,7 @@ public class PlayerControl : MonoBehaviour
                 SFXSounds.PlayOneShot(sounds.superJump1);
                 powerUp = "none";
             }
-            else if (powerUp == "GravityMarble")
+            else if (powerUp == "GravityMarble" && !gravMarbleActive)
             {
                 StartCoroutine(gravityMarble());
                 powerUp = "none";
@@ -310,6 +310,10 @@ public class PlayerControl : MonoBehaviour
                 {
                     SFXSounds.PlayOneShot(sounds.noPush1);
                 }                
+            }
+            else
+            {
+                SFXSounds.PlayOneShot(sounds.noPow1);
             }
         }
 
