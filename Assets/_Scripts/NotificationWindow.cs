@@ -20,13 +20,10 @@ public class NotificationWindow : MonoBehaviour
             if (playername == "" && !shouldOpen)
             {
                 infield.text = startTxt;
-
-                Debug.Log("shouldOpen == true");
                 shouldOpen = true;                
             }
             else if(playername != "" && shouldOpen)
             {
-                Debug.Log("shouldOpen == false");
                 shouldOpen = false;
             }            
         }        
@@ -77,12 +74,10 @@ public class NotificationWindow : MonoBehaviour
         if (shouldOpen && !isOpen)
         {
             isOpen = true;
-            Debug.Log("isOpen == true");
         }
         else if(!shouldOpen && isOpen)
         {
             isOpen = false;
-            Debug.Log("isOpen == false");
         }
         
 

@@ -20,7 +20,7 @@ public class HUDScript : MonoBehaviour
     public readOuts HUD = new readOuts();
 
     private Rigidbody rb;
-    private float deltaTime, finishTime;        
+    private float deltaTime, finishTime, hFPS, lFPS;        //GET RID OF FPS VARS LATER!!!
 
     IEnumerator EndDelay(int lvlToload, bool win = false)
     {
@@ -122,6 +122,10 @@ public class HUDScript : MonoBehaviour
         {
             DataManager.load();
         }
+
+        //GET RID OF THESE LATER!!!
+        hFPS = 0.0f;
+        lFPS = 60.0f;
     }
 	
 	// Update is called once per frame
@@ -131,9 +135,19 @@ public class HUDScript : MonoBehaviour
         HUD.powerText.text = "Power:" + player.GetComponent<PlayerControl>().powerUp;
         HUD.FPcounter.text = "Pushes:" + player.GetComponent<PlayerControl>().powps.fPushes.ToString();
 
+        ///////////////////////
         deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
         float fps = 1.0f / deltaTime;
-        HUD.FRmeter.text = "FPS: " + fps.ToString();
+        if (fps < lFPS && Time.deltaTime > 0.001f)
+        {
+            lFPS = fps;
+        }
+        else if (fps > hFPS && Time.deltaTime > 0.001f)
+        {
+            hFPS = fps;
+        }
+        HUD.FRmeter.text = "FPS: " + ((Time.deltaTime > 0.001f)?fps.ToString():"PAUSED") + "\nLow FPS: " + lFPS.ToString() + "\nHigh FPS: " + hFPS.ToString();
+        ///////////////////////
 
         if (!gameOver)
         {
