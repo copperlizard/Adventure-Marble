@@ -73,6 +73,7 @@
     <Compile Include="Assets\_Scripts\InputFieldPlaceHolder.cs" />
     <Compile Include="Assets\_Scripts\LevelData.cs" />
     <Compile Include="Assets\_Scripts\LoadLevelButton.cs" />
+    <Compile Include="Assets\_Scripts\MarbleTrail.cs" />
     <Compile Include="Assets\_Scripts\Menu.cs" />
     <Compile Include="Assets\_Scripts\MenuJoypadControls.cs" />
     <Compile Include="Assets\_Scripts\MenuManager.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Assets\_Scripts\ShowCurMatName.cs" />
     <Compile Include="Assets\_Scripts\Switch.cs" />
     <Compile Include="Assets\_Scripts\ToggleLookAxis.cs" />
+    <Compile Include="Assets\_Scripts\ToggleMarbleTrail.cs" />
     <Compile Include="Assets\_Scripts\chasePlayer.cs" />
     <Compile Include="Assets\_Scripts\rotator.cs" />
   </ItemGroup>
